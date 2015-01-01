@@ -27,7 +27,6 @@ public class SignUpActivity extends Activity {
                 EditText passwort1SignUpEditText = (EditText) findViewById(R.id.passwort1SignUpEditText);
                 EditText passwort2SignUpEditText = (EditText) findViewById(R.id.passwort2SignUpEditText);
                 TextView errorSignUpTextView = (TextView) findViewById(R.id.errorSignUpTextView);
-                SignUpData signUpData = new SignUpData();
 
                 String vorname = vornameSignUpEditText.getText().toString();
                 String nachname = nachnameSignUpEditText.getText().toString();
@@ -35,15 +34,20 @@ public class SignUpActivity extends Activity {
                 String passwort1 = passwort1SignUpEditText.getText().toString();
                 String passwort2 = passwort2SignUpEditText.getText().toString();
 
+                SignUpData signUpData;
+
                 if(vorname.isEmpty() || nachname.isEmpty() || email.isEmpty() || passwort1.isEmpty()|| passwort2.isEmpty())
                     errorSignUpTextView.setText("Fill all boxes!");
                 else {
                     if (passwort1.equals(passwort2)) {
-                        signUpData.setVorname(vorname);
-                        signUpData.setNachname(nachname);
-                        signUpData.setEmail(email);
-                        signUpData.setPasswort(passwort1);
-                        finish(); //Beendet Activity
+
+                        signUpData = new SignUpData(vorname,nachname,email,passwort1);
+
+                        if(signUpData.pushDataToServer()){  //Daten werden aus Server gespeichert
+                            finish(); //Beendet Activity
+                        }
+                        else
+                            errorSignUpTextView.setText("Failed to SignUp!");
                     } else
                         errorSignUpTextView.setText("Passwords don't match!");
                 }

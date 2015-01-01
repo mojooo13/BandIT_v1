@@ -10,5 +10,10 @@
     <string name="title_activity_edit_profil">EditProfilActivity</string>
     <string name="title_activity_create_event">CreateEventActivity</string>
     <string name="title_activity_edit_band">EditBandActivity</string>
+    <string name="title_activity_band">BandActivity</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_event">EventActivity</string>
+    <string name="title_activity_message">MessageActivity</string>
+    <string name="title_activity_message_detail">MessageDetailActivity</string>
 
 </resources>

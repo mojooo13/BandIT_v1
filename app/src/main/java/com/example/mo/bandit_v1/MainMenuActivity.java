@@ -3,6 +3,7 @@ package com.example.mo.bandit_v1;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +35,6 @@ public class MainMenuActivity extends Activity {
         actionBar.addTab(tab1);
         actionBar.addTab(tab2);
         actionBar.addTab(tab3);
-
     }
 
 
@@ -50,10 +50,26 @@ public class MainMenuActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        int profilID = getIntent().getExtras().getInt("profilID");
+
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
         }
+        if(id == R.id.action_logout){
+            finish();
+        }
+        if(id == R.id.action_search){
+            Intent intent = new Intent(MainMenuActivity.this,SearchActivity.class);
+            intent.putExtra("profilID",profilID);
+            startActivity(intent);
+        }
+        if(id == R.id.action_message){
+            Intent intent = new Intent(MainMenuActivity.this,MessageActivity.class);
+
+            intent.putExtra("profilID",profilID);
+            startActivity(intent);        }
+
         return super.onOptionsItemSelected(item);
     }
 }

@@ -17,7 +17,8 @@ public class EditBandActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_band);
 
-        final BandData bandData = new BandData("ACDC", "Moritz Hauch", "Rock N Roll", "High Way To Hell", "Guitar");
+        int idBand = getIntent().getIntExtra("idBand",0);
+        final BandData bandData = new BandData(idBand);
 
         TextView newBandnameEditBandTextView = (TextView) findViewById(R.id.newBandnameEditBandTextView);
         TextView newMemberEditBandTextView = (TextView) findViewById(R.id.newMemberEditBandTextView);

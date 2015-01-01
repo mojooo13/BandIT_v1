@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 
 public class CreateBandActivity extends Activity {
@@ -19,6 +20,17 @@ public class CreateBandActivity extends Activity {
         saveCreateBandButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                int profilID = getIntent().getExtras().getInt("profilID");
+
+                EditText newBandnameCreateBandEditText = (EditText) findViewById(R.id.newBandnameCreateBandEditText);
+                EditText newGenreCreateBandEditText = (EditText) findViewById(R.id.newGenreCreateBandEditText);
+
+                String bandnameCreateBandString = newBandnameCreateBandEditText.getText().toString();
+                String genreCreateBandString = newGenreCreateBandEditText.getText().toString();
+
+                BandData bandData = new BandData(profilID, bandnameCreateBandString,genreCreateBandString);
+
                 finish();
             }
         });

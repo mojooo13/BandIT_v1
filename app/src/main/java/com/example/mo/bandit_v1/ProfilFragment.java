@@ -35,7 +35,9 @@ public class ProfilFragment  extends Fragment{
             }
         });
 
-        final ProfilData profilData = new ProfilData("Moritz", "Hauch" , "moritz.hauch1@gmx.net", "Rupert Gugg Str 4", "Gitarre", "Hard Rock");
+        int profilID = getActivity().getIntent().getExtras().getInt("profilID");
+        final ProfilData profilData = new ProfilData(profilID);
+        //final ProfilData profilData = new ProfilData("Moritz", "Hauch" , "moritz.hauch1@gmx.net", "Rupert Gugg Str 4", "Gitarre", "Hard Rock");
 
         TextView vornameProfilTextView = (TextView) view.findViewById(R.id.vornameProfilTextView);
         TextView nachnameProfilTextView = (TextView) view.findViewById(R.id.nachnameProfilTextView);

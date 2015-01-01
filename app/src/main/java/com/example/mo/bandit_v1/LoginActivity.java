@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class LoginActivity extends Activity {
@@ -29,7 +31,21 @@ public class LoginActivity extends Activity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,MainMenuActivity.class));
+                EditText emailLogInEditText = (EditText) findViewById(R.id.emailLogInEditText);
+                EditText passwortLogInEditText = (EditText) findViewById(R.id.passwortLogInEditText);
+                String email = emailLogInEditText.getText().toString();
+                String passwort = passwortLogInEditText.getText().toString();
+
+                Intent intent = new Intent(LoginActivity.this,MainMenuActivity.class);
+                ProfilData profilData = new ProfilData(email,passwort);
+                if(profilData.status){
+                    intent.putExtra("profilID",profilData.getId());
+                    startActivity(intent);
+                }
+                else{
+                    TextView errorLogInTextView = (TextView) findViewById(R.id.errorLogInTextView);
+                    errorLogInTextView.setText("Email and/or Password is incorrect");
+                }
             }
         });
     }

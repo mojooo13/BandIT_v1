@@ -41,6 +41,15 @@
         android:layout_alignTop="@+id/loginLogInButton"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
-
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/errorLogInTextView"
+        android:textSize="20dp"
+        android:textColor="#ffff0005"
+        android:text=""
+        android:layout_below="@+id/loginLogInButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
