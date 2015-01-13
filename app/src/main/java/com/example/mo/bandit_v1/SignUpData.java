@@ -14,8 +14,8 @@ public class SignUpData{
     String jsonString;
 
     public SignUpData(){
-
     }
+
     public SignUpData(String vorname,String nachname,String email,String passwort){
         this.vorname = vorname;
         this.nachname = nachname;
@@ -23,7 +23,7 @@ public class SignUpData{
         this.passwort = passwort;
 
         JSONObject obj = new JSONObject();
-        String a;
+
         try {
             obj.put("vorname", vorname);
             obj.put("nachname", nachname);
@@ -36,14 +36,10 @@ public class SignUpData{
 
             jsonString = ""+obj;
             System.out.println(jsonString);
-
-
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public boolean pushDataToServer(){
