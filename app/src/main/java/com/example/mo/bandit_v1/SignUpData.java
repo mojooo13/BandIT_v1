@@ -28,11 +28,15 @@ public class SignUpData{
             obj.put("nachname", nachname);
             obj.put("email", email);
             obj.put("passwort", passwort);
-            a = obj.getString("vorname");
+            obj.put("command", "signUp");
 
+            a = obj.getString("vorname");
             System.out.println(a);
-            String jsonString = "command: "+obj;
+
+            String jsonString = ""+obj;
             System.out.println(jsonString);
+
+            //ServerCommunication serverCommunication = new ServerCommunication(jsonString);
         }
         catch (JSONException e) {
             e.printStackTrace();
