@@ -17,16 +17,18 @@ import java.io.InputStreamReader;
 /**
  * Created by Mo on 15.12.2014.
  */
-public class Server {
+public class ServerCommunication {
 
     String jsonString;
     private static Context context;
 
-    public void Server (String jsonString,Context c){
-        context = c;
+    public ServerCommunication (String jsonString){
+        //context = c;
 
-
+        System.out.println("hallo");
+        String uri = "http//www.server.com/";
         this.jsonString = jsonString;
+        jsonString = uri+jsonString;
 
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(jsonString);
@@ -43,11 +45,11 @@ public class Server {
                 Toast.makeText(context, "Unable to complete your request", Toast.LENGTH_LONG).show();
             }
         } catch (ClientProtocolException e) {
-            Toast.makeText(context, "Caught ClientProtocolException", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Caught ClientProtocolException", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
-            Toast.makeText(context, "Caught IOException", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Caught IOException", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(context, "Caught Exception", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Caught Exception", Toast.LENGTH_SHORT).show();
         }
     }
 
