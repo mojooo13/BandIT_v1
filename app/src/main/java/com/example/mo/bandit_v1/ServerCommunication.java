@@ -25,7 +25,6 @@ public class ServerCommunication {
     public ServerCommunication (String jsonString){
         //context = c;
 
-        System.out.println("hallo");
         String uri = "http//www.server.com/";
         this.jsonString = jsonString;
         jsonString = uri+jsonString;

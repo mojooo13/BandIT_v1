@@ -11,6 +11,7 @@ public class SignUpData{
     String nachname;
     String email;
     String passwort;
+    String jsonString;
 
     public SignUpData(){
 
@@ -30,13 +31,13 @@ public class SignUpData{
             obj.put("passwort", passwort);
             obj.put("command", "signUp");
 
-            a = obj.getString("vorname");
-            System.out.println(a);
+            //a = obj.getString("vorname");
+            //System.out.println(a);
 
-            String jsonString = ""+obj;
+            jsonString = ""+obj;
             System.out.println(jsonString);
 
-            //ServerCommunication serverCommunication = new ServerCommunication(jsonString);
+
         }
         catch (JSONException e) {
             e.printStackTrace();
@@ -45,6 +46,12 @@ public class SignUpData{
 
     }
 
+    public boolean pushDataToServer(){
+        boolean status;
+        //push server -> return true/false
+        //ServerCommunication serverCommunication = new ServerCommunication(jsonString);
+        return true;
+    }
     public String getVorname() {
         return vorname;
     }
