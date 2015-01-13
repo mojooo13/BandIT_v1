@@ -45,12 +45,6 @@ public class SignUpData{
 
     }
 
-    public boolean pushDataToServer(){
-        boolean status;
-        //push server -> return true/false
-
-        return true;
-    }
     public String getVorname() {
         return vorname;
     }
