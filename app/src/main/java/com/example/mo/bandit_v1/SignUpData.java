@@ -1,5 +1,8 @@
 package com.example.mo.bandit_v1;
 
+import android.app.Activity;
+import android.widget.TextView;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,11 +28,11 @@ public class SignUpData{
         JSONObject obj = new JSONObject();
 
         try {
-            obj.put("vorname", vorname);
-            obj.put("nachname", nachname);
+            obj.put("firstName", vorname);
+            obj.put("secondName", nachname);
             obj.put("email", email);
-            obj.put("passwort", passwort);
-            obj.put("command", "signUp");
+            obj.put("password", passwort);
+            obj.put("command", "createAccount");
 
             //a = obj.getString("vorname");
             //System.out.println(a);
@@ -42,11 +45,33 @@ public class SignUpData{
         }
     }
 
-    public boolean pushDataToServer(){
-        boolean status;
+    public boolean pushDataToServer(Activity activity){
         //push server -> return true/false
-        //ServerCommunication serverCommunication = new ServerCommunication(jsonString);
-        return true;
+        ServerCommunication serverCommunication = new ServerCommunication();
+        String line = serverCommunication.communication(jsonString);
+        System.out.println("##############"+line);
+        line = line.substring(line.indexOf("$")+1);
+        try {
+            JSONObject jsonObject = new JSONObject(line);
+            String status = jsonObject.getString("status");
+            if(status.equals("true")) {
+                return true;
+            }
+            else if(status.equals("emailexists")){
+                TextView errorSignUpTextView = (TextView) activity.findViewById(R.id.errorSignUpTextView);
+                errorSignUpTextView.setText("Email already exists.");
+            }
+            else{
+                TextView errorSignUpTextView = (TextView) activity.findViewById(R.id.errorSignUpTextView);
+                errorSignUpTextView.setText(status);
+            }
+
+        }catch (Exception e){
+
+        }
+
+        return false;
+
     }
     public String getVorname() {
         return vorname;

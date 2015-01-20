@@ -1,6 +1,7 @@
 package com.example.mo.bandit_v1;
 
 import android.content.Context;
+import android.os.StrictMode;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -13,24 +14,35 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * Created by Mo on 15.12.2014.
  */
 public class ServerCommunication {
 
-    String jsonString;
     private static Context context;
 
-    public ServerCommunication (String jsonString){
+    public String communication (String json){
         //context = c;
 
-        String uri = "http//www.server.com/";
-        this.jsonString = jsonString;
-        jsonString = uri+jsonString;
+        String l="";
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        String query = null;
+        try {
+            query = URLEncoder.encode(json, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet(jsonString);
+        HttpGet httpget = new HttpGet("http://10.150.1.122/?json="+query);
 
         try {
             HttpResponse response = httpclient.execute(httpget);
@@ -38,6 +50,7 @@ public class ServerCommunication {
                 String line = "";
                 InputStream inputstream = response.getEntity().getContent();
                 line = convertStreamToString(inputstream);
+                l=line;
                 Toast.makeText(context, line, Toast.LENGTH_LONG).show();
                 Toast.makeText(context, "Error",Toast.LENGTH_LONG).show();
             } else {
@@ -50,6 +63,7 @@ public class ServerCommunication {
         } catch (Exception e) {
             //Toast.makeText(context, "Caught Exception", Toast.LENGTH_SHORT).show();
         }
+        return l;
     }
 
     private String convertStreamToString(InputStream is) {

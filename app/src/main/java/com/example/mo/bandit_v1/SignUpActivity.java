@@ -43,11 +43,12 @@ public class SignUpActivity extends Activity {
 
                         signUpData = new SignUpData(vorname,nachname,email,passwort1);
 
-                        if(signUpData.pushDataToServer()){  //Daten werden aus Server gespeichert
+                        SignUpActivity signUpActivity = SignUpActivity.this;
+                        if(signUpData.pushDataToServer(signUpActivity )){  //Daten werden aus Server gespeichert
                             finish(); //Beendet Activity
                         }
-                        else
-                            errorSignUpTextView.setText("Failed to SignUp!");
+                        //else
+                            //errorSignUpTextView.setText("Failed to SignUp!");
                     } else
                         errorSignUpTextView.setText("Passwords don't match!");
                 }

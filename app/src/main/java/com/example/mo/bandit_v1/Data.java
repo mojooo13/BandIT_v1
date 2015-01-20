@@ -10,6 +10,6 @@ public class Data {
     NotificationData notificationData;
 
     public Data(String email, String passwort){
-
+        profilData = new ProfilData(email,passwort);
     }
 }

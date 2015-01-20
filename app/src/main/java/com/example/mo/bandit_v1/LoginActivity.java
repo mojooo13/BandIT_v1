@@ -37,9 +37,9 @@ public class LoginActivity extends Activity {
                 String passwort = passwortLogInEditText.getText().toString();
 
                 Intent intent = new Intent(LoginActivity.this,MainMenuActivity.class);
-                ProfilData profilData = new ProfilData(email,passwort);
-                if(profilData.status){
-                    intent.putExtra("profilID",profilData.getId());
+                LoginData loginData = new LoginData(email,passwort);
+                if(loginData.login()){
+                    //intent.putExtra("profilID",profilData.getId());
                     startActivity(intent);
                 }
                 else{
