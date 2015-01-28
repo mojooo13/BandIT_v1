@@ -67,7 +67,8 @@ public class SignUpData{
             }
 
         }catch (Exception e){
-
+            System.out.println("Catch!!!");
+            e.printStackTrace();
         }
 
         return false;

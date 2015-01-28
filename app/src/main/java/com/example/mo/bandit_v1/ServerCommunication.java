@@ -42,7 +42,7 @@ public class ServerCommunication {
         }
 
         HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet("http://10.150.1.122/?json="+query);
+        HttpGet httpget = new HttpGet("http://192.168.88.47/?json="+query);
 
         try {
             HttpResponse response = httpclient.execute(httpget);

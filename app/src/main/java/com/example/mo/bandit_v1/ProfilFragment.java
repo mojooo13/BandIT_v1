@@ -14,7 +14,7 @@ import android.widget.TextView;
 /**
  * Created by Mo on 21.10.2014.
  */
-public class ProfilFragment  extends Fragment{
+public class ProfilFragment extends Fragment{
 
 
     ImageView contactImageView;
