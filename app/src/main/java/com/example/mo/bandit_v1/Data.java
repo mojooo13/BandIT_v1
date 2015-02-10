@@ -11,6 +11,7 @@ import org.json.JSONObject;
  */
 public class Data implements Parcelable {//Klassen ins Intent
     ProfilData profilData = new ProfilData();
+    //BandData[] bandData;
     BandData bandData;
     EventData eventData;
     NotificationData notificationData;
@@ -35,21 +36,34 @@ public class Data implements Parcelable {//Klassen ins Intent
             profilData.profilAdress = jsonObject1.getString("adress");
 
             JSONArray jsonArr= jsonObject1.getJSONArray("instrument");
-            String[] instrumets = new String[jsonArr.length()];
-            for(int i=0;i<instrumets.length;i++){
+            profilData.profilInstruments = new String[jsonArr.length()];
+
+            for(int i=0;i< profilData.profilInstruments.length;i++){
                 profilData.profilInstruments[i]=jsonArr.get(i).toString();
             }
-            for(int i = 0; i < instrumets.length; i++){
-                System.out.println(instrumets[i]);
+            for(int i = 0; i < profilData.profilInstruments.length; i++){
+                System.out.println( profilData.profilInstruments[i]);
             }
+            /*
+            JSONArray jsonArray = jsonObject2.getJSONArray("bands");
+            bandData = new BandData[jsonArray.length()];
+
+            for(int i=0;i< bandData.length;i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                bandData[i].bandName=jsonObject.getString("bandName");
+                bandData[i].bandGenre=jsonObject.getString("genre");
+                System.out.println(bandData[i].bandGenre);
+            }
+            */
+
 
         }catch (Exception e){
-
+            e.printStackTrace();
         }
     }
 
     protected Data(Parcel in) {
-        profilData = (ProfilData) in.readValue(ProfilData.class.getClassLoader());
+        profilData = in.readParcelable(ProfilData.class.getClassLoader());
         bandData = (BandData) in.readValue(BandData.class.getClassLoader());
         eventData = (EventData) in.readValue(EventData.class.getClassLoader());
         notificationData = (NotificationData) in.readValue(NotificationData.class.getClassLoader());
@@ -65,7 +79,8 @@ public class Data implements Parcelable {//Klassen ins Intent
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(profilData);
+        //dest.writeValue(profilData);
+        dest.writeParcelable(profilData, flags);
         dest.writeValue(bandData);
         dest.writeValue(eventData);
         dest.writeValue(notificationData);

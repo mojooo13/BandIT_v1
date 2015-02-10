@@ -51,16 +51,19 @@ public class ServerCommunication {
                 InputStream inputstream = response.getEntity().getContent();
                 line = convertStreamToString(inputstream);
                 l=line;
-                Toast.makeText(context, line, Toast.LENGTH_LONG).show();
-                Toast.makeText(context, "Error",Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, line, Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Error",Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(context, "Unable to complete your request", Toast.LENGTH_LONG).show();
             }
         } catch (ClientProtocolException e) {
+            e.printStackTrace();
             //Toast.makeText(context, "Caught ClientProtocolException", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
+            e.printStackTrace();
             //Toast.makeText(context, "Caught IOException", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
+            e.printStackTrace();
             //Toast.makeText(context, "Caught Exception", Toast.LENGTH_SHORT).show();
         }
         return l;
@@ -75,6 +78,7 @@ public class ServerCommunication {
                 total.append(line);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             Toast.makeText(context, "Stream Exception", Toast.LENGTH_SHORT).show();
         }
         return total.toString();

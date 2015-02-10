@@ -36,7 +36,10 @@ public class ProfilFragment extends Fragment{
         });
 
         int profilID = getActivity().getIntent().getExtras().getInt("profilID");
-        final ProfilData profilData = new ProfilData(profilID);
+        //final ProfilData profilData = new ProfilData(profilID);
+        Intent intent = getActivity().getIntent();
+        Data data = intent.getParcelableExtra("data");
+        final ProfilData profilData = data.profilData;
         //final ProfilData profilData = new ProfilData("Moritz", "Hauch" , "moritz.hauch1@gmx.net", "Rupert Gugg Str 4", "Gitarre", "Hard Rock");
 
         TextView vornameProfilTextView = (TextView) view.findViewById(R.id.vornameProfilTextView);
@@ -50,7 +53,8 @@ public class ProfilFragment extends Fragment{
         nachnameProfilTextView.setText(profilData.getProfilNachname().toString());
         emailProfilTextView.setText(profilData.getProfilEmail().toString());
         adressProfilTextView.setText(profilData.getProfilAdress().toString());
-        instrumentProfilTextView.setText("Instrument: " + profilData.getProfilInstrument().toString());
+
+        instrumentProfilTextView.setText("Instrument: " + profilData.getProfilInstruments()[0] + ", " +  profilData.getProfilInstruments()[1]);
         genreProfilTextView.setText("Genre: " + profilData.getProfilGenre().toString());
 
         Button editProfilButton = (Button) view.findViewById(R.id.editProfilButton);
@@ -62,7 +66,7 @@ public class ProfilFragment extends Fragment{
                 intent.putExtra("nachname",profilData.getProfilNachname().toString());
                 intent.putExtra("email",profilData.getProfilEmail().toString());
                 intent.putExtra("adress",profilData.getProfilAdress().toString());
-                intent.putExtra("instrument",profilData.getProfilInstrument().toString());
+                //intent.putExtra("instrument",profilData.getProfilInstrument().toString());
                 intent.putExtra("genre",profilData.getProfilGenre().toString());
                 startActivity(intent);
             }

@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by Mo on 24.10.2014.
  */
-public class ProfilData implements Parcelable {
+public class ProfilData implements Parcelable{
     int profilID;
     int[] bandIDs;
     String profilVorname;
@@ -67,8 +67,8 @@ public class ProfilData implements Parcelable {
     public String getProfilAdress() {
         return profilAdress;
     }
-    public String getProfilInstrument() {
-        return profilInstrument;
+    public String[] getProfilInstruments() {
+        return profilInstruments;
     }
     public String getProfilGenre() {
         return profilGenre;
@@ -84,6 +84,9 @@ public class ProfilData implements Parcelable {
         profilEmail = in.readString();
         profilAdress = in.readString();
         profilInstrument = in.readString();
+        int profilInstrumentsLength = in.readInt();
+        profilInstruments = new String[profilInstrumentsLength];
+        in.readStringArray(profilInstruments);
         profilGenre = in.readString();
         passwort = in.readString();
         telephonNr = in.readString();
@@ -103,6 +106,8 @@ public class ProfilData implements Parcelable {
         dest.writeString(profilEmail);
         dest.writeString(profilAdress);
         dest.writeString(profilInstrument);
+        dest.writeInt(profilInstruments.length);
+        dest.writeStringArray(profilInstruments);
         dest.writeString(profilGenre);
         dest.writeString(passwort);
         dest.writeString(telephonNr);
