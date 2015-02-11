@@ -29,6 +29,9 @@ public class SearchActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        setContentView(R.layout.activity_search);
+        setContentView(R.layout.searchlistitem);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
@@ -75,10 +78,20 @@ public class SearchActivity extends Activity {
             searchGenre = extras.getString("searchGenre");
             searchType = extras.getString("searchType");
 
-            if(searchName != null && searchGenre != null && searchType != null)
-            initListDataTable(searchName,searchGenre,searchType);
+            if(searchName != null && searchGenre != null && searchType != null) {
 
-            ListView searchListView = (ListView) findViewById(R.id.searchResult);
+
+                initListDataTable(searchName, searchGenre, searchType);
+
+
+                ListView searchListView = (ListView) findViewById(R.id.listResult);
+                searchListView.setVisibility(View.VISIBLE);
+                TextView resultEditText = (TextView) findViewById(R.id.result);
+                resultEditText.setVisibility(View.VISIBLE);
+
+                myAdapter = new MyItemAdapter();
+                searchListView.setAdapter(myAdapter);
+            }
         }
     }
 
@@ -145,13 +158,14 @@ public class SearchActivity extends Activity {
             return (long) position;
         }
         public View getView(int position, View convertView, ViewGroup parent) {
-            LinearLayout itemView = (LinearLayout) mInflater.inflate(R.layout.bandlistitem, parent, false);
+            LinearLayout itemView = (LinearLayout) mInflater.inflate(R.layout.searchlistitem, parent, false);
             bindView(itemView, position);
             return itemView;
         }
         private void bindView(LinearLayout view, int position) {
             listEntry entry = getItem(position);
             view.setId((int) getItemId(position));
+
             TextView searchNameTextView = (TextView) view.findViewById(R.id.searchName);
             TextView searchGenreTextView = (TextView) view.findViewById(R.id.searchGenre);
 
