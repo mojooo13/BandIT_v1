@@ -80,7 +80,7 @@ public class BandFragment extends Fragment {
         return view;
     }
 
-    private class Datensatz {
+    private class Datensatz{
         public String name;  // besser setter und getter-Methoden schreiben, stört hier aber...
         public String genre; // die Umwandlung von Datum lasse ich weg - das ist ein anderes (großes) Problem
         public Datensatz(String name, String genre) {

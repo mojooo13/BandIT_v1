@@ -1,15 +1,22 @@
 package com.example.mo.bandit_v1;
 
+
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class SearchActivity extends Activity {
@@ -19,19 +26,130 @@ public class SearchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        final ListView searchListView = (ListView)findViewById(R.id.bandListView);
-        List valueList = new ArrayList<BandData>();
+        Bundle extras = getIntent().getExtras();
 
-        for (int i = 0; i < 10; i++)
-        {
-            valueList.add(new BandData(i));
+        String searchName;
+        String searchGenre;
+        String searchType;
+
+        Button searchProfileButton = (Button) findViewById(R.id.searchNameButton);
+        searchProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new newSearchActivity("profile");
+            }
+        });
+        Button searchBandButton = (Button) findViewById(R.id.searchBandButton);
+        searchBandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new newSearchActivity("band");
+            }
+        });
+        Button searchEventButton = (Button) findViewById(R.id.searchEventButton);
+        searchEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new newSearchActivity("event");
+            }
+        });
+        Button searchMusicButton = (Button) findViewById(R.id.searchMusicButton);
+        searchMusicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new newSearchActivity("music");
+            }
+        });
+
+
+        if (extras != null) {
+            searchName = extras.getString("searchName");
+            searchGenre = extras.getString("searchGenre");
+            searchType = extras.getString("searchType");
+
+            
         }
 
-        ListAdapter adapter = new ArrayAdapter<BandData>(getApplicationContext(), android.R.layout.simple_list_item_1, valueList);
-        searchListView.setAdapter(adapter);
+
+
+
 
     }
 
+    private class listEntry{
+        public String name;
+        public String genre;
+        public int id;
+
+        private listEntry(String name, String genre, int id) {
+            this.name = name;
+            this.genre = genre;
+            this.id = id;
+        }
+    }
+
+    private ArrayList<listEntry> listDataTable;
+
+    private void initListDataTable() {
+        listDataTable = new ArrayList<listEntry>();
+
+
+
+        for (int i=0; i<100; i++) {
+            //listEntry newEntry = new listEntry(searchResult.name[i],searchResult.genre[i],searchResult.id[i]);
+            //listDataTable.add(newEntry);
+        }
+    }
+
+    class MyItemAdapter extends BaseAdapter {
+        private final LayoutInflater mInflater;
+        public MyItemAdapter() {
+            mInflater = (LayoutInflater) SearchActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+        public int getCount() {
+            return listDataTable.size();
+        }
+        public listEntry getItem(int position) {
+            return listDataTable.get(position);
+        }
+        public long getItemId(int position) {
+            return (long) position;
+        }
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LinearLayout itemView = (LinearLayout) mInflater.inflate(R.layout.bandlistitem, parent, false);
+            bindView(itemView, position);
+            return itemView;
+        }
+        private void bindView(LinearLayout view, int position) {
+            listEntry entry = getItem(position);
+            view.setId((int) getItemId(position));
+            TextView searchNameTextView = (TextView) view.findViewById(R.id.searchName);
+            TextView searchGenreTextView = (TextView) view.findViewById(R.id.searchGenre);
+            searchNameTextView.setText(entry.name);
+            searchGenreTextView.setText(entry.genre);
+        }
+    }
+
+    private class newSearchActivity{
+        Intent nextIntent = new Intent(SearchActivity.this, SearchActivity.class);
+        String searchName = "";
+        String searchGenre = "";
+
+        newSearchActivity(String searchCondition){
+            EditText searchNameEditText = (EditText) findViewById(R.id.searchName);
+            EditText searchGenreEditText = (EditText) findViewById(R.id.searchGenre);
+
+            searchName = searchNameEditText.getText().toString();
+            searchGenre = searchGenreEditText.getText().toString();
+
+            nextIntent.putExtra("searchType",searchCondition);
+            nextIntent.putExtra("searchName",searchName);
+            nextIntent.putExtra("searchGenre",searchGenre);
+
+            startActivity(nextIntent);
+
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
