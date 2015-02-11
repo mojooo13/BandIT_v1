@@ -4,6 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SearchActivity extends Activity {
@@ -12,6 +18,18 @@ public class SearchActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        final ListView searchListView = (ListView)findViewById(R.id.bandListView);
+        List valueList = new ArrayList<BandData>();
+
+        for (int i = 0; i < 10; i++)
+        {
+            valueList.add(new BandData(i));
+        }
+
+        ListAdapter adapter = new ArrayAdapter<BandData>(getApplicationContext(), android.R.layout.simple_list_item_1, valueList);
+        searchListView.setAdapter(adapter);
+
     }
 
 
@@ -33,4 +51,5 @@ public class SearchActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
