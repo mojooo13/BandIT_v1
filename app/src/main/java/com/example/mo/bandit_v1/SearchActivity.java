@@ -1,6 +1,5 @@
 package com.example.mo.bandit_v1;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,12 +13,19 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 
 public class SearchActivity extends Activity {
+
+    private MyItemAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,8 @@ public class SearchActivity extends Activity {
         String searchName;
         String searchGenre;
         String searchType;
+
+
 
         Button searchProfileButton = (Button) findViewById(R.id.searchNameButton);
         searchProfileButton.setOnClickListener(new View.OnClickListener() {
@@ -67,13 +75,11 @@ public class SearchActivity extends Activity {
             searchGenre = extras.getString("searchGenre");
             searchType = extras.getString("searchType");
 
-            
+            if(searchName != null && searchGenre != null && searchType != null)
+            initListDataTable(searchName,searchGenre,searchType);
+
+            ListView searchListView = (ListView) findViewById(R.id.searchResult);
         }
-
-
-
-
-
     }
 
     private class listEntry{
@@ -90,14 +96,37 @@ public class SearchActivity extends Activity {
 
     private ArrayList<listEntry> listDataTable;
 
-    private void initListDataTable() {
+    private void initListDataTable(String name, String genre, String type) {
         listDataTable = new ArrayList<listEntry>();
+        ServerCommunication con = new ServerCommunication();
+
+        JSONObject jsonStringObject = new JSONObject();
+        try {
+            jsonStringObject.put("type",type);
+            jsonStringObject.put("genre",genre);
+            jsonStringObject.put("name",name);
+            jsonStringObject.put("command","searchDataList");
+
+            String serverAnswer =  con.communication(jsonStringObject.toString());
+            String jsonString = serverAnswer.substring(serverAnswer.indexOf("$")+1);
+
+            jsonStringObject = new JSONObject(jsonString);
+            System.out.println(jsonStringObject.toString());
+
+            if(jsonStringObject.getString("command").equals("searchDataList") && jsonStringObject.getString("status").equals("true")){
+                JSONArray jsonStringArray = jsonStringObject.getJSONArray("list");
+
+                for (int i=0; i<jsonStringArray.length(); i++) {
+                    jsonStringObject = new JSONObject(jsonStringArray.getString(i));
+                    listEntry newEntry = new listEntry(jsonStringObject.getString("name"),jsonStringObject.getString("genre"),jsonStringObject.getInt("id"));
+                    listDataTable.add(newEntry);
+                }
+            }
 
 
-
-        for (int i=0; i<100; i++) {
-            //listEntry newEntry = new listEntry(searchResult.name[i],searchResult.genre[i],searchResult.id[i]);
-            //listDataTable.add(newEntry);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
@@ -125,6 +154,7 @@ public class SearchActivity extends Activity {
             view.setId((int) getItemId(position));
             TextView searchNameTextView = (TextView) view.findViewById(R.id.searchName);
             TextView searchGenreTextView = (TextView) view.findViewById(R.id.searchGenre);
+
             searchNameTextView.setText(entry.name);
             searchGenreTextView.setText(entry.genre);
         }
@@ -147,6 +177,8 @@ public class SearchActivity extends Activity {
             nextIntent.putExtra("searchGenre",searchGenre);
 
             startActivity(nextIntent);
+
+            finish();
 
         }
     }
