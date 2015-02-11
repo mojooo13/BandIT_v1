@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
+
 <LinearLayout
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     android:paddingTop="25dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
@@ -55,26 +59,44 @@
     </LinearLayout>
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="1.0" >
+
+    <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1.0" >
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight=".5"
-            android:text="Event"
-            android:id="@+id/searchEventButton" />
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight=".5"
-            android:text="Music"
-            android:id="@+id/searchMusicButton" />
+        android:layout_weight=".5"
+        android:text="Event"
+        android:id="@+id/searchEventButton" />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5"
+        android:text="Music"
+        android:id="@+id/searchMusicButton" />
 
     </LinearLayout>
+
+    <TextView
+        android:textStyle="bold"
+        android:paddingBottom="15dp"
+        android:textSize="30dp"
+        android:text="Results:"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+
+    <ListView
+        android:id="@+id/bandListView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_below="@+id/SearchResult"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </LinearLayout>
