@@ -88,7 +88,6 @@ public class BandFragment extends Fragment {
             this.genre = genre;
         }
     }
-
     private ArrayList<Datensatz> datensaetze;
 
     private void initDatensaetze() {
