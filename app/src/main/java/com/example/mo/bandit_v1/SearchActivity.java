@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,8 +39,8 @@ public class SearchActivity extends Activity {
         Bundle extras = getIntent().getExtras();
 
         String searchName;
-        String searchGenre;
-        String searchType;
+        final String searchGenre;
+        final String searchType;
 
 
 
@@ -91,14 +92,39 @@ public class SearchActivity extends Activity {
 
                 myAdapter = new MyItemAdapter();
                 searchListView.setAdapter(myAdapter);
+
+                searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        listEntry chosenEntry = listDataTable.get(position);
+                        int intentId = chosenEntry.getId();
+
+                        if(searchType.equals("profile")){
+                                Intent intent = new Intent(SearchActivity.this,ProfileActivity.class);
+                                System.out.println("id:"+intentId);
+                                intent.putExtra("id",intentId);
+                                startActivity(intent);
+                        }
+                    }
+                });
             }
         }
     }
 
     private class listEntry{
-        public String name;
-        public String genre;
-        public int id;
+        private String name;
+        private String genre;
+        private int id;
+
+        public String getName() {
+            return name;
+        }
+        public String getGenre() {
+            return genre;
+        }
+        public int getId() {
+            return id;
+        }
 
         private listEntry(String name, String genre, int id) {
             this.name = name;
@@ -133,6 +159,8 @@ public class SearchActivity extends Activity {
                     jsonStringObject = new JSONObject(jsonStringArray.getString(i));
                     listEntry newEntry = new listEntry(jsonStringObject.getString("name"),jsonStringObject.getString("genre"),jsonStringObject.getInt("id"));
                     listDataTable.add(newEntry);
+
+
                 }
             }
 
@@ -169,8 +197,8 @@ public class SearchActivity extends Activity {
             TextView searchNameTextView = (TextView) view.findViewById(R.id.searchName);
             TextView searchGenreTextView = (TextView) view.findViewById(R.id.searchGenre);
 
-            searchNameTextView.setText(entry.name);
-            searchGenreTextView.setText(entry.genre);
+            searchNameTextView.setText(entry.getName());
+            searchGenreTextView.setText(entry.getGenre());
         }
     }
 
