@@ -3,6 +3,9 @@ package com.example.mo.bandit_v1;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by Mo on 24.10.2014.
  */
@@ -39,16 +42,37 @@ public class ProfilData implements Parcelable{
 
     //Profil Fragment
     public ProfilData(int profilID){
-        //daten vom Server hohlen
-        this.profilID = profilID;
-        profilVorname = "Mo";
-        profilNachname = "Hauch";
-        profilEmail = "moritz.hauch1@gmx.net";
-        profilAdress = "Rupert Gugg Str 4";
-        profilInstrument = "Guitar";
-        profilGenre = "Rock";
-        passwort = "123456";
-        bandIDs = new int[]{1,2,3,4};
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("command","getProfileData");
+            jsonObject.put("id",profilID);
+
+            ServerCommunication con = new ServerCommunication();
+            String jsonString = con.communication(jsonObject.toString());
+            jsonString = jsonString.substring(jsonString.indexOf("$")+1);
+            jsonObject = new JSONObject(jsonString);
+
+            if(jsonObject.getString("status").equals("true")) {
+                this.profilID = profilID;
+                profilVorname = jsonObject.getString("firstName");
+                profilNachname = jsonObject.getString("secondName");
+                profilEmail = jsonObject.getString("email");
+                profilAdress = jsonObject.getString("adress");
+                profilGenre = jsonObject.getString("genre");
+                telephonNr = jsonObject.getString("mobileNumber");
+                passwort = jsonObject.getString("password");
+
+                profilInstrument = jsonObject.getString("instrument");
+                profilInstruments = profilInstrument.split(",");
+                for(int i = 0; i<profilInstruments.length;i++)
+                    profilInstruments[i] = profilInstruments[i].substring(profilInstruments[i].indexOf("\"")+1,profilInstruments[i].lastIndexOf("\""));
+
+
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public ProfilData(){
@@ -75,6 +99,9 @@ public class ProfilData implements Parcelable{
     }
     public int getId() {
         return profilID;
+    }
+    public String getTelephonNr() {
+        return telephonNr;
     }
 
     protected ProfilData(Parcel in) {

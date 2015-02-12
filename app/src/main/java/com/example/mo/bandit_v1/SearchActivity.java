@@ -101,7 +101,6 @@ public class SearchActivity extends Activity {
 
                         if(searchType.equals("profile")){
                                 Intent intent = new Intent(SearchActivity.this,ProfileActivity.class);
-                                System.out.println("id:"+intentId);
                                 intent.putExtra("id",intentId);
                                 startActivity(intent);
                         }

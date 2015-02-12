@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class ProfileActivity extends Activity {
 
@@ -13,8 +14,28 @@ public class ProfileActivity extends Activity {
         setContentView(R.layout.activity_profile);
 
         int id = getIntent().getExtras().getInt("id");
+        ProfilData profilData = new ProfilData(id);
 
-        System.out.println("id on profilepage: " +id );
+        TextView firstName = (TextView)findViewById(R.id.profileFirstName);
+        TextView secondName = (TextView)findViewById(R.id.profileSecondName);
+        TextView adress = (TextView)findViewById(R.id.profileAdress);
+        TextView instruments = (TextView)findViewById(R.id.profileInstruments);
+        TextView genre = (TextView)findViewById(R.id.profileGenre);
+        TextView number = (TextView)findViewById(R.id.profileMobileNumber);
+
+        String instrumentString = "";
+        for(int i = 0; i< profilData.getProfilInstruments().length;i++) {
+            instrumentString = instrumentString + profilData.getProfilInstruments()[i] + ", ";
+        }
+        instrumentString = instrumentString.substring(0,instrumentString.lastIndexOf(","));
+
+        firstName.setText(profilData.getProfilVorname());
+        secondName.setText(profilData.getProfilNachname());
+        adress.setText(profilData.getProfilAdress());
+        instruments.setText(instrumentString);
+        genre.setText(profilData.getProfilGenre());
+        number.setText(profilData.getTelephonNr());
+
     }
 
 

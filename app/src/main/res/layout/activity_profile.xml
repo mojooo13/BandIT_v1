@@ -1,17 +1,48 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.mo.bandit_v1.ProfileActivity">
+<LinearLayout
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="1.0" >
 
     <TextView
-        android:text="@string/hello_world"
-        android:id="@+id/profileTextView"
+        android:text="@string/kein"
+        android:id="@+id/profileFirstName"
+        android:layout_width="wrap_content"
+        android:textSize="20dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="@string/kein"
+        android:textSize="20dp"
+        android:id="@+id/profileSecondName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="@string/kein"
+        android:textSize="20dp"
+        android:id="@+id/profileAdress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="@string/kein"
+        android:textSize="20dp"
+        android:id="@+id/profileMobileNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="@string/kein"
+        android:textSize="20dp"
+        android:id="@+id/profileInstruments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="@string/kein"
+        android:textSize="20dp"
+        android:id="@+id/profileGenre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-</RelativeLayout>
+</LinearLayout>
