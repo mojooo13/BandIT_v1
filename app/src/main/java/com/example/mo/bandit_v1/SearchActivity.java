@@ -104,6 +104,16 @@ public class SearchActivity extends Activity {
                                 intent.putExtra("id",intentId);
                                 startActivity(intent);
                         }
+                        if(searchType.equals("band")){
+                            Intent intent = new Intent(SearchActivity.this,BandActivity.class);
+                            intent.putExtra("id",intentId);
+                            startActivity(intent);
+                        }
+                        if(searchType.equals("event")){
+                            Intent intent = new Intent(SearchActivity.this,EventActivity.class);
+                            intent.putExtra("id",intentId);
+                            startActivity(intent);
+                        }
                     }
                 });
             }
