@@ -17,8 +17,8 @@ public class BandActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_band);
 
-        final int bandID = getIntent().getExtras().getInt("bandID");
-        BandData bandData = new BandData(bandID);
+        final int id = getIntent().getExtras().getInt("id");
+        BandData bandData = new BandData(id);
 
         TextView bandnameBandTextView = (TextView) findViewById(R.id.bandnameBandTextView);
         TextView genreBandTextView = (TextView) findViewById(R.id.genreBandTextView);
@@ -37,7 +37,7 @@ public class BandActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BandActivity.this,EditBandActivity.class);
-                intent.putExtra("bandID",bandID);
+                intent.putExtra("bandID",id);
 
                 startActivity(intent);
 

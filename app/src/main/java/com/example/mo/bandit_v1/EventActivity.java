@@ -12,6 +12,9 @@ public class EventActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+
+        final int id = getIntent().getExtras().getInt("id");
+        EventData eventData = new EventData(id);
     }
 
 
