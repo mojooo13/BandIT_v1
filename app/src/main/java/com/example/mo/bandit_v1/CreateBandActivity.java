@@ -21,7 +21,7 @@ public class CreateBandActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                int profilID = getIntent().getExtras().getInt("profilID");
+                //int profilID = getIntent().getExtras().getInt("profilID");
 
                 EditText newBandnameCreateBandEditText = (EditText) findViewById(R.id.newBandnameCreateBandEditText);
                 EditText newGenreCreateBandEditText = (EditText) findViewById(R.id.newGenreCreateBandEditText);
@@ -29,7 +29,7 @@ public class CreateBandActivity extends Activity {
                 String bandnameCreateBandString = newBandnameCreateBandEditText.getText().toString();
                 String genreCreateBandString = newGenreCreateBandEditText.getText().toString();
 
-                BandData bandData = new BandData(profilID, bandnameCreateBandString,genreCreateBandString);
+                //BandData bandData = new BandData(profilID, bandnameCreateBandString,genreCreateBandString);
 
                 finish();
             }

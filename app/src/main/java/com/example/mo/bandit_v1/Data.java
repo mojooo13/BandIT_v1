@@ -6,14 +6,15 @@ import android.os.Parcelable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * Created by Mo on 13.01.2015.
  */
 public class Data implements Parcelable {//Klassen ins Intent
     ProfilData profilData = new ProfilData();
-    //BandData[] bandData;
-    BandData bandData;
-    EventData eventData;
+    ArrayList<BandData> bandDatas;
+    ArrayList<EventData> eventDatas;
     NotificationData notificationData;
     String line1;
     String line2;
@@ -44,17 +45,22 @@ public class Data implements Parcelable {//Klassen ins Intent
             for(int i = 0; i < profilData.profilInstruments.length; i++){
                 System.out.println( profilData.profilInstruments[i]);
             }
-            /*
-            JSONArray jsonArray = jsonObject2.getJSONArray("bands");
-            bandData = new BandData[jsonArray.length()];
 
-            for(int i=0;i< bandData.length;i++){
+            JSONArray jsonArray = jsonObject2.getJSONArray("bands");
+            bandDatas = new ArrayList<BandData>();
+            for(int i=0;i< jsonArray.length();i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                bandData[i].bandName=jsonObject.getString("bandName");
-                bandData[i].bandGenre=jsonObject.getString("genre");
-                System.out.println(bandData[i].bandGenre);
+                BandData bandData = new BandData(jsonObject.getString("bandName"),jsonObject.getString("genre"));
+                bandDatas.add(bandData);
             }
-            */
+
+            JSONArray jsonArray2 = jsonObject3.getJSONArray("events");
+            eventDatas = new ArrayList<EventData>();
+            for(int i=0;i< jsonArray2.length();i++){
+                JSONObject jsonObject = jsonArray2.getJSONObject(i);
+                EventData eventData = new EventData(jsonObject.getInt("eventID"),jsonObject.getString("eventName"),jsonObject.getString("eventGenre"));
+                eventDatas.add(eventData);
+            }
 
 
         }catch (Exception e){
@@ -64,12 +70,16 @@ public class Data implements Parcelable {//Klassen ins Intent
 
     protected Data(Parcel in) {
         profilData = in.readParcelable(ProfilData.class.getClassLoader());
-        bandData = (BandData) in.readValue(BandData.class.getClassLoader());
-        eventData = (EventData) in.readValue(EventData.class.getClassLoader());
+        //bandData = (BandData) in.readValue(BandData.class.getClassLoader());
+        //eventData = (EventData) in.readValue(EventData.class.getClassLoader());
         notificationData = (NotificationData) in.readValue(NotificationData.class.getClassLoader());
         line1 = in.readString();
         line2 = in.readString();
         line3 = in.readString();
+        bandDatas = new ArrayList<BandData>();
+        in.readTypedList(bandDatas,BandData.CREATOR);
+        eventDatas = new ArrayList<EventData>();
+        in.readTypedList(eventDatas,EventData.CREATOR);
     }
 
     @Override
@@ -81,12 +91,14 @@ public class Data implements Parcelable {//Klassen ins Intent
     public void writeToParcel(Parcel dest, int flags) {
         //dest.writeValue(profilData);
         dest.writeParcelable(profilData, flags);
-        dest.writeValue(bandData);
-        dest.writeValue(eventData);
+        //dest.writeValue(bandData);
+        //dest.writeValue(eventData);
         dest.writeValue(notificationData);
         dest.writeString(line1);
         dest.writeString(line2);
         dest.writeString(line3);
+        dest.writeTypedList(bandDatas);
+        dest.writeTypedList(eventDatas);
     }
 
     @SuppressWarnings("unused")

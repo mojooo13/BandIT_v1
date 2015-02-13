@@ -25,17 +25,25 @@ public class EventFragment extends Fragment {
     private MyItemAdapter myAdapter;
 
     int[] idEvents = {1,2,3,4};
-    String[] eventNameArray = new String[idEvents.length];
-    String[] eventGenreArray = new String[idEvents.length];
+    String[] eventNameArray;
+    String[] eventGenreArray;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.event, container, false);
 
-        for (int i = 0; i<idEvents.length;i++){
-            EventData eventData = new EventData(idEvents[i]);
-            eventNameArray[i] = eventData.eventName+": ";
-            eventGenreArray[i] = eventData.eventGenre;
+        Intent intent = getActivity().getIntent();
+        Data data = intent.getParcelableExtra("data");
+        ArrayList<EventData> eventDatas = data.eventDatas;
+
+        EventData[] eventData = eventDatas.toArray(new EventData[eventDatas.size()]);
+
+        eventNameArray = new String[eventData.length];
+        eventGenreArray = new String[eventData.length];
+
+        for (int i = 0; i<eventDatas.size();i++){
+            //EventData eventData = new EventData(idEvents[i]);
+            eventNameArray[i] = eventData[i].eventName+": ";
+            eventGenreArray[i] = eventData[i].eventGenre;
         }
         initDatensaetze();
         ListView eventListView = (ListView) view.findViewById(R.id.eventListView);
