@@ -1,14 +1,19 @@
 package com.example.mo.bandit_v1;
 
+<<<<<<< HEAD
 import org.json.JSONException;
 import org.json.JSONObject;
+=======
+import android.os.Parcel;
+import android.os.Parcelable;
+>>>>>>> c3d0ba5cd177ba553991dbf45e2ce9fa6afc9085
 
 /**
  * Created by Mo on 24.10.2014.
  */
-public class EventData {
+public class EventData implements Parcelable {
     int idEvent;
-    int[] idBands;
+    //int[] idBands;
     String eventName;
     String eventDate;
     String eventTime;
@@ -43,6 +48,21 @@ public class EventData {
             e.printStackTrace();
         }
         //Daten von id holen
+<<<<<<< HEAD
+=======
+        eventName = "NOVA ROCK";
+        eventDate = "02.09.2015";
+        eventTime = "19:30";
+        eventLocation = "Schüdlbauer";
+        eventGenre = "Hard Rock";
+        eventMusik = "High Way To Hell";
+        //idBands = new int[] {1,2,3,4};
+    }
+    public EventData(int idEvent, String eventName, String  eventGenre){
+        this.idEvent = idEvent;
+        this.eventName = eventName;
+        this.eventGenre = eventGenre;
+>>>>>>> c3d0ba5cd177ba553991dbf45e2ce9fa6afc9085
 
     }
 
@@ -57,6 +77,7 @@ public class EventData {
         //get Id
         idEvent = 21;
     }
+<<<<<<< HEAD
 
     public void setIdEvent(int idEvent) {
         this.idEvent = idEvent;
@@ -113,4 +134,47 @@ public class EventData {
     public String getEventMusik() {
         return eventMusik;
     }
+=======
+    protected EventData(Parcel in) {
+        idEvent = in.readInt();
+        eventName = in.readString();
+        eventDate = in.readString();
+        eventTime = in.readString();
+        eventLocation = in.readString();
+        eventBand = in.readString();
+        eventGenre = in.readString();
+        eventMusik = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(idEvent);
+        dest.writeString(eventName);
+        dest.writeString(eventDate);
+        dest.writeString(eventTime);
+        dest.writeString(eventLocation);
+        dest.writeString(eventBand);
+        dest.writeString(eventGenre);
+        dest.writeString(eventMusik);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<EventData> CREATOR = new Parcelable.Creator<EventData>() {
+        @Override
+        public EventData createFromParcel(Parcel in) {
+            return new EventData(in);
+        }
+
+        @Override
+        public EventData[] newArray(int size) {
+            return new EventData[size];
+        }
+    };
+    
+>>>>>>> c3d0ba5cd177ba553991dbf45e2ce9fa6afc9085
 }

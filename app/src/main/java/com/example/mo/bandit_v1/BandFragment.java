@@ -39,17 +39,25 @@ public class BandFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.band, container, false);
 
-        int profilID = getActivity().getIntent().getExtras().getInt("profilID");
-        final ProfilData profilData = new ProfilData(profilID);
+        Intent intent = getActivity().getIntent();
+        Data data = intent.getParcelableExtra("data");
+        ArrayList<BandData> bandDatas = data.bandDatas;
 
-        final int[] idBands = profilData.bandIDs;
-        bandNameArray = new String[idBands.length];
-        bandGenreArray = new String[idBands.length];
+        BandData[] bandDatas1 = bandDatas.toArray(new BandData[bandDatas.size()]);
 
-        for (int i = 0; i<idBands.length;i++){
-            BandData bandData = new BandData(idBands[i]);
-            bandNameArray[i] = bandData.bandName+": ";
-            bandGenreArray[i] = bandData.bandGenre;
+        //int profilID = getActivity().getIntent().getExtras().getInt("profilID");
+        //final ProfilData profilData = new ProfilData(profilID);
+
+        //final int[] idBands = profilData.bandIDs;
+        bandNameArray = new String[bandDatas1.length];
+        bandGenreArray = new String[bandDatas1.length];
+
+        for (int i = 0; i<bandDatas1.length;i++){
+            //BandData bandData = new BandData(idBands[i]);
+            //bandNameArray[i] = bandData.bandName+": ";
+            //bandGenreArray[i] = bandData.bandGenre;
+            bandNameArray[i] = bandDatas1[i].bandName+": ";
+            bandGenreArray[i] = bandDatas1[i].bandGenre;
         }
 
         initDatensaetze();
@@ -60,9 +68,9 @@ public class BandFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Datensatz gewaehlterDatensatz = datensaetze.get(position);
-                int idBand = idBands[position];
+                //int idBand = idBands[position];
                 Intent intent = new Intent(getActivity(),BandActivity.class);
-                intent.putExtra("bandID",idBand);
+                //intent.putExtra("bandID",idBand);
                 startActivity(intent);
             }
         });
@@ -72,7 +80,7 @@ public class BandFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),CreateBandActivity.class);
-                intent.putExtra("profilID",profilData.getId());
+                //intent.putExtra("profilID",profilData.getId());
                 startActivity(intent);
             }
         });

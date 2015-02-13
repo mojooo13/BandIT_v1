@@ -35,7 +35,7 @@ public class ProfilFragment extends Fragment{
             }
         });
 
-        int profilID = getActivity().getIntent().getExtras().getInt("profilID");
+        //int profilID = getActivity().getIntent().getExtras().getInt("profilID");
         //final ProfilData profilData = new ProfilData(profilID);
         Intent intent = getActivity().getIntent();
         Data data = intent.getParcelableExtra("data");

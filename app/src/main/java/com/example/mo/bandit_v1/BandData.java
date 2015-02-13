@@ -1,12 +1,17 @@
 package com.example.mo.bandit_v1;
 
+<<<<<<< HEAD
 import org.json.JSONException;
 import org.json.JSONObject;
+=======
+import android.os.Parcel;
+import android.os.Parcelable;
+>>>>>>> c3d0ba5cd177ba553991dbf45e2ce9fa6afc9085
 
 /**
  * Created by Mo on 24.10.2014.
  */
-public class BandData {
+public class BandData implements Parcelable {
 
     int bandID;
     String bandName;
@@ -15,6 +20,9 @@ public class BandData {
     String bandMusik;
     String bandInstruments;
 
+    public BandData(){
+
+    }
     public BandData(String bandName, String bandMembers, String bandGenre, String bandMusik, String bandInstruments){
         this.bandName = bandName;
         this.bandMembers = bandMembers;
@@ -52,15 +60,9 @@ public class BandData {
     }
 
     //Create Band
-    public  BandData(int profilID, String bandName, String bandGenre){
+    public  BandData(String bandName, String bandGenre){
         this.bandName = bandName;
         this.bandGenre = bandGenre;
-
-        //Daten vom Profil holen
-        bandID = 15;
-        bandMembers = "Moritz Hauch";
-        bandMusik = "Highway To Hell";
-        bandInstruments = "Guitar";
     }
 
     public String getBandName() {
@@ -93,4 +95,41 @@ public class BandData {
     public void setBandMusik(String bandMusik) {
         this.bandMusik = bandMusik;
     }
+
+    protected BandData(Parcel in) {
+        bandID = in.readInt();
+        bandName = in.readString();
+        bandMembers = in.readString();
+        bandGenre = in.readString();
+        bandMusik = in.readString();
+        bandInstruments = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(bandID);
+        dest.writeString(bandName);
+        dest.writeString(bandMembers);
+        dest.writeString(bandGenre);
+        dest.writeString(bandMusik);
+        dest.writeString(bandInstruments);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<BandData> CREATOR = new Parcelable.Creator<BandData>() {
+        @Override
+        public BandData createFromParcel(Parcel in) {
+            return new BandData(in);
+        }
+
+        @Override
+        public BandData[] newArray(int size) {
+            return new BandData[size];
+        }
+    };
 }
