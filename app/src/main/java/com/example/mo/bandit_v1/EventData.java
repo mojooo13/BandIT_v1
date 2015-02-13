@@ -1,19 +1,19 @@
 package com.example.mo.bandit_v1;
 
-<<<<<<< HEAD
-import org.json.JSONException;
-import org.json.JSONObject;
-=======
 import android.os.Parcel;
 import android.os.Parcelable;
->>>>>>> c3d0ba5cd177ba553991dbf45e2ce9fa6afc9085
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
 
 /**
  * Created by Mo on 24.10.2014.
  */
 public class EventData implements Parcelable {
     int idEvent;
-    //int[] idBands;
+    int[] idBands;
     String eventName;
     String eventDate;
     String eventTime;
@@ -48,8 +48,7 @@ public class EventData implements Parcelable {
             e.printStackTrace();
         }
         //Daten von id holen
-<<<<<<< HEAD
-=======
+
         eventName = "NOVA ROCK";
         eventDate = "02.09.2015";
         eventTime = "19:30";
@@ -62,7 +61,7 @@ public class EventData implements Parcelable {
         this.idEvent = idEvent;
         this.eventName = eventName;
         this.eventGenre = eventGenre;
->>>>>>> c3d0ba5cd177ba553991dbf45e2ce9fa6afc9085
+
 
     }
 
@@ -77,7 +76,7 @@ public class EventData implements Parcelable {
         //get Id
         idEvent = 21;
     }
-<<<<<<< HEAD
+
 
     public void setIdEvent(int idEvent) {
         this.idEvent = idEvent;
@@ -134,7 +133,7 @@ public class EventData implements Parcelable {
     public String getEventMusik() {
         return eventMusik;
     }
-=======
+
     protected EventData(Parcel in) {
         idEvent = in.readInt();
         eventName = in.readString();
@@ -176,5 +175,4 @@ public class EventData implements Parcelable {
         }
     };
     
->>>>>>> c3d0ba5cd177ba553991dbf45e2ce9fa6afc9085
 }

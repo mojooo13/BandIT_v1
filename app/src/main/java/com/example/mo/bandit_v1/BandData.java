@@ -1,12 +1,11 @@
 package com.example.mo.bandit_v1;
 
-<<<<<<< HEAD
-import org.json.JSONException;
-import org.json.JSONObject;
-=======
 import android.os.Parcel;
 import android.os.Parcelable;
->>>>>>> c3d0ba5cd177ba553991dbf45e2ce9fa6afc9085
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 /**
  * Created by Mo on 24.10.2014.
