@@ -174,5 +174,5 @@ public class EventData implements Parcelable {
             return new EventData[size];
         }
     };
-    
+
 }

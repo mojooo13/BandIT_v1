@@ -34,7 +34,7 @@ public class SearchActivity extends Activity {
         setContentView(R.layout.activity_search);
         setContentView(R.layout.searchlistitem);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+
 
         Bundle extras = getIntent().getExtras();
 
@@ -89,6 +89,7 @@ public class SearchActivity extends Activity {
                 searchListView.setVisibility(View.VISIBLE);
                 TextView resultEditText = (TextView) findViewById(R.id.result);
                 resultEditText.setVisibility(View.VISIBLE);
+
 
                 myAdapter = new MyItemAdapter();
                 searchListView.setAdapter(myAdapter);
@@ -150,30 +151,34 @@ public class SearchActivity extends Activity {
 
         JSONObject jsonStringObject = new JSONObject();
         try {
-            jsonStringObject.put("type",type);
-            jsonStringObject.put("genre",genre);
-            jsonStringObject.put("name",name);
-            jsonStringObject.put("command","searchDataList");
+            jsonStringObject.put("type", type);
+            jsonStringObject.put("genre", genre);
+            jsonStringObject.put("name", name);
+            jsonStringObject.put("command", "searchDataList");
 
-            String serverAnswer =  con.communication(jsonStringObject.toString());
-            String jsonString = serverAnswer.substring(serverAnswer.indexOf("$")+1);
+            String serverAnswer = con.communication(jsonStringObject.toString());
+            String jsonString = serverAnswer.substring(serverAnswer.indexOf("$") + 1);
 
             jsonStringObject = new JSONObject(jsonString);
             System.out.println(jsonStringObject.toString());
 
-            if(jsonStringObject.getString("command").equals("searchDataList") && jsonStringObject.getString("status").equals("true")){
+            if (jsonStringObject.getString("command").equals("searchDataList") && jsonStringObject.getString("status").equals("true")) {
                 JSONArray jsonStringArray = jsonStringObject.getJSONArray("list");
 
-                for (int i=0; i<jsonStringArray.length(); i++) {
+                for (int i = 0; i < jsonStringArray.length(); i++) {
                     jsonStringObject = new JSONObject(jsonStringArray.getString(i));
-                    listEntry newEntry = new listEntry(jsonStringObject.getString("name"),jsonStringObject.getString("genre"),jsonStringObject.getInt("id"));
+                    listEntry newEntry = new listEntry(jsonStringObject.getString("name"), jsonStringObject.getString("genre"), jsonStringObject.getInt("id"));
                     listDataTable.add(newEntry);
 
 
                 }
             }
+            if (jsonStringObject.getString("status").equals("NoResults")) {
+                TextView result = (TextView) findViewById(R.id.result);
+                result.setText("Nothing found");
 
 
+            }
         }
         catch (JSONException e) {
             e.printStackTrace();
