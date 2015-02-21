@@ -163,18 +163,18 @@ public class SearchActivity extends Activity {
             System.out.println(jsonStringObject.toString());
 
             if (jsonStringObject.getString("command").equals("searchDataList") && jsonStringObject.getString("status").equals("true")) {
-                JSONArray jsonStringArray = jsonStringObject.getJSONArray("list");
+                    JSONArray jsonStringArray = jsonStringObject.getJSONArray("list");
 
-                for (int i = 0; i < jsonStringArray.length(); i++) {
-                    jsonStringObject = new JSONObject(jsonStringArray.getString(i));
-                    listEntry newEntry = new listEntry(jsonStringObject.getString("name"), jsonStringObject.getString("genre"), jsonStringObject.getInt("id"));
-                    listDataTable.add(newEntry);
+                    for (int i = 0; i < jsonStringArray.length(); i++) {
+                        jsonStringObject = new JSONObject(jsonStringArray.getString(i));
+                        listEntry newEntry = new listEntry(jsonStringObject.getString("name"), jsonStringObject.getString("genre"), jsonStringObject.getInt("id"));
+                        listDataTable.add(newEntry);
 
 
+                    }
                 }
-            }
-            if (jsonStringObject.getString("status").equals("NoResults")) {
-                TextView result = (TextView) findViewById(R.id.result);
+                if (jsonStringObject.getString("status").equals("NoResults")) {
+                    TextView result = (TextView) findViewById(R.id.result);
                 result.setText("Nothing found");
 
 

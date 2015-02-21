@@ -54,9 +54,14 @@ public class ProfilFragment extends Fragment{
         emailProfilTextView.setText(profilData.getProfilEmail().toString());
         adressProfilTextView.setText(profilData.getProfilAdress().toString());
 
-        instrumentProfilTextView.setText("Instrument: " + profilData.getProfilInstruments()[0] + ", " +  profilData.getProfilInstruments()[1]);
-        genreProfilTextView.setText("Genre: " + profilData.getProfilGenre().toString());
 
+        String instrumentText = "instruments:";
+        for(int i = 0; i < profilData.getProfilInstruments().length;i++){
+            instrumentText = instrumentText + profilData.getProfilInstruments()[i];
+        }
+
+        instrumentProfilTextView.setText(instrumentText);
+        genreProfilTextView.setText("Genre: " + profilData.getProfilGenre().toString());
         Button editProfilButton = (Button) view.findViewById(R.id.editProfilButton);
         editProfilButton.setOnClickListener(new View.OnClickListener() {
             @Override
