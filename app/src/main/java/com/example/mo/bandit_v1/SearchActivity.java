@@ -43,7 +43,7 @@ public class SearchActivity extends Activity {
         final String searchType;
 
 
-
+        setContentView(R.layout.activity_search);
         Button searchProfileButton = (Button) findViewById(R.id.searchNameButton);
         searchProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
