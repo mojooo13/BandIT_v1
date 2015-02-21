@@ -43,6 +43,14 @@ public class BandActivity extends Activity {
 
             }
         });
+
+        Button uploadMusicButton = (Button) findViewById(R.id.bandUploadMusic);
+        editBandBandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               
+            }
+        });
     }
 
 

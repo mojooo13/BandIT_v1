@@ -49,6 +49,7 @@
         android:layout_alignParentStart="true" />
 
     <Button
+        android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="EditBand"
@@ -56,5 +57,16 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload Music"
+        android:id="@+id/bandUploadMusic"
+        android:layout_above="@+id/editBandBandButton"
+        android:layout_alignRight="@+id/editBandBandButton"
+        android:layout_alignEnd="@+id/editBandBandButton" />
+
 
 </RelativeLayout>
