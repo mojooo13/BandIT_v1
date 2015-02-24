@@ -39,7 +39,7 @@ public class LoginActivity extends Activity{
                 Intent intent = new Intent(LoginActivity.this,MainMenuActivity.class);
                 LoginData loginData = new LoginData(email,passwort);
                 if(loginData.login()){
-                    Data data = new Data(loginData.line1, loginData.line2, loginData.line3);
+                    Data data = new Data(loginData.line1, loginData.line2, loginData.line3, loginData.line4);
                     intent.putExtra("data",data);
                     intent.putExtra("profilID",5);
                     startActivity(intent);

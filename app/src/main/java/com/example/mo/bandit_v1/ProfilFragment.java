@@ -57,7 +57,7 @@ public class ProfilFragment extends Fragment{
 
         String instrumentText = "instruments:";
         for(int i = 0; i < profilData.getProfilInstruments().length;i++){
-            instrumentText = instrumentText + profilData.getProfilInstruments()[i];
+            instrumentText = instrumentText + " " + profilData.getProfilInstruments()[i];
         }
 
         instrumentProfilTextView.setText(instrumentText);

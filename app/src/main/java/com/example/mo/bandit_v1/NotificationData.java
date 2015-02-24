@@ -1,5 +1,7 @@
 package com.example.mo.bandit_v1;
 
+import java.util.ArrayList;
+
 /**
  * Created by Mo on 01.12.2014.
  */
@@ -13,6 +15,10 @@ public class NotificationData {
     String date;
     String message;
     String sendername;
+    ArrayList<BandRequest> bandRequests;
+    ArrayList<EventReuqest> eventReuqests;
+
+
 
     //Aufruf der Message Activity
     public NotificationData(int senderID){
