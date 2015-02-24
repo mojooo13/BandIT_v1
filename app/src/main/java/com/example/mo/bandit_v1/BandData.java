@@ -59,9 +59,10 @@ public class BandData implements Parcelable {
     }
 
     //Create Band
-    public  BandData(String bandName, String bandGenre){
+    public  BandData(String bandName, String bandGenre, int bandID){
         this.bandName = bandName;
         this.bandGenre = bandGenre;
+        this.bandID = bandID;
     }
 
     public String getBandName() {

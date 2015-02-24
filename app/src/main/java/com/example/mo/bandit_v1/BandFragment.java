@@ -26,7 +26,7 @@ public class BandFragment extends Fragment {
     //String[] bandNameArray = {"ACDC:","CCR:","CC TOP:","ABBA:"};
     //String[] bandGenreArray = {"Hard-Rock","Rock","Country","Pop"};
     //int[] idPositionArray = {5,7,9,45};
-    //int[] idBands = {1,2,3,4};
+    int[] idBands;
     String[] bandNameArray;
     String[] bandGenreArray;
 
@@ -40,7 +40,7 @@ public class BandFragment extends Fragment {
         View view = inflater.inflate(R.layout.band, container, false);
 
         Intent intent = getActivity().getIntent();
-        Data data = intent.getParcelableExtra("data");
+        final Data data = intent.getParcelableExtra("data");
         ArrayList<BandData> bandDatas = data.bandDatas;
 
         BandData[] bandDatas1 = bandDatas.toArray(new BandData[bandDatas.size()]);
@@ -51,6 +51,7 @@ public class BandFragment extends Fragment {
         //final int[] idBands = profilData.bandIDs;
         bandNameArray = new String[bandDatas1.length];
         bandGenreArray = new String[bandDatas1.length];
+        idBands = new int[bandDatas1.length];
 
         for (int i = 0; i<bandDatas1.length;i++){
             //BandData bandData = new BandData(idBands[i]);
@@ -58,6 +59,7 @@ public class BandFragment extends Fragment {
             //bandGenreArray[i] = bandData.bandGenre;
             bandNameArray[i] = bandDatas1[i].bandName+": ";
             bandGenreArray[i] = bandDatas1[i].bandGenre;
+            idBands[i] = bandDatas1[i].bandID;
         }
 
         initDatensaetze();
@@ -68,9 +70,9 @@ public class BandFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Datensatz gewaehlterDatensatz = datensaetze.get(position);
-                //int idBand = idBands[position];
+                int idBand = gewaehlterDatensatz.id;
                 Intent intent = new Intent(getActivity(),BandActivity.class);
-                //intent.putExtra("bandID",idBand);
+                intent.putExtra("id",idBand);
                 startActivity(intent);
             }
         });
@@ -80,7 +82,7 @@ public class BandFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),CreateBandActivity.class);
-                //intent.putExtra("profilID",profilData.getId());
+                intent.putExtra("data",data);
                 startActivity(intent);
             }
         });
@@ -91,9 +93,11 @@ public class BandFragment extends Fragment {
     private class Datensatz{
         public String name;  // besser setter und getter-Methoden schreiben, stört hier aber...
         public String genre; // die Umwandlung von Datum lasse ich weg - das ist ein anderes (großes) Problem
-        public Datensatz(String name, String genre) {
+        public int id;
+        public Datensatz(String name, String genre,int id) {
             this.name = name;
             this.genre = genre;
+            this.id = id;
         }
     }
     private ArrayList<Datensatz> datensaetze;
@@ -102,7 +106,7 @@ public class BandFragment extends Fragment {
         datensaetze = new ArrayList<Datensatz>();
         for (int i=0; i<bandNameArray.length; i++) {
             // hier aus Arrays auslesen, bei dir wahrscheinlich anders...
-            Datensatz datensatz = new Datensatz(bandNameArray[i],bandGenreArray[i]);
+            Datensatz datensatz = new Datensatz(bandNameArray[i],bandGenreArray[i],idBands[i]);
             datensaetze.add(datensatz);
         }
     }
