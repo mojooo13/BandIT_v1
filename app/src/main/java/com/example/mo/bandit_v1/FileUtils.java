@@ -28,6 +28,6 @@ public class FileUtils {
             return uri.getPath();
         }
 
-        return null;
+        return "no result from getPath() Method";
     }
 }

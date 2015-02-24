@@ -1,7 +1,10 @@
 package com.example.mo.bandit_v1;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 
 public class BandActivity extends Activity {
@@ -36,24 +40,19 @@ public class BandActivity extends Activity {
         instrumentsBandTextView.setText(bandData.getBandInstruments());
         membersBandTextView.setText(bandData.getBandMembers());
 
-
         Button editBandBandButton = (Button) findViewById(R.id.editBandBandButton);
         editBandBandButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BandActivity.this,EditBandActivity.class);
-                intent.putExtra("bandID",id);
-
-                startActivity(intent);
 
             }
         });
-
         Button uploadMusicButton = (Button) findViewById(R.id.bandUploadMusic);
-        editBandBandButton.setOnClickListener(new View.OnClickListener() {
+        uploadMusicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               showFileChooser();
+                showFileChooser();
+
             }
         });
     }
@@ -81,17 +80,31 @@ public class BandActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public static boolean isIntentAvailable(Context context, String action) {
+        final PackageManager packageManager = context.getPackageManager();
+        final Intent intent = new Intent(action);
+        List<ResolveInfo> list =
+                packageManager.queryIntentActivities(intent,
+                        PackageManager.MATCH_DEFAULT_ONLY);
+        return true;
+       // return list.size() > 0;
+    }
+
     private static final int FILE_SELECT_CODE = 0;
 
     private void showFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("mp3");
+        intent.setType("audio/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
 
+
+
         try {
-            startActivityForResult(
-                    Intent.createChooser(intent, "Select a File to Upload"),
-                    FILE_SELECT_CODE);
+            if(isIntentAvailable(this,"*/*")) {
+                startActivityForResult(
+                        Intent.createChooser(intent, "Select a File to Upload"),
+                        FILE_SELECT_CODE);
+            }
         } catch (android.content.ActivityNotFoundException ex) {
             // Potentially direct the user to the Market with a Dialog
             Toast.makeText(this, "Please install a File Manager.",
@@ -108,9 +121,10 @@ public class BandActivity extends Activity {
                     Uri uri = data.getData();
                     Log.d("TAG", "File Uri: " + uri.toString());
                     // Get the path
-                    String path = null;
+                    String path = "no path";
                     try {
                         path = FileUtils.getPath(this, uri);
+                        System.out.println(path);
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
