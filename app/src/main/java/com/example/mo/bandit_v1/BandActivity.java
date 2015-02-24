@@ -31,14 +31,12 @@ public class BandActivity extends Activity {
 
         TextView bandnameBandTextView = (TextView) findViewById(R.id.bandnameBandTextView);
         TextView genreBandTextView = (TextView) findViewById(R.id.genreBandTextView);
-        TextView instrumentsBandTextView = (TextView) findViewById(R.id.instrumentsBandTextView);
         TextView membersBandTextView = (TextView) findViewById(R.id.membersBandTextView);
-
+        TextView FilePathTextView = (TextView)findViewById(R.id.uploadFilePathTextView);
 
         bandnameBandTextView.setText(bandData.getBandName());
         genreBandTextView.setText(bandData.getBandGenre());
-        instrumentsBandTextView.setText(bandData.getBandInstruments());
-        membersBandTextView.setText(bandData.getBandMembers());
+        membersBandTextView.setText(bandData.getBandMembers().toString());
 
         Button editBandBandButton = (Button) findViewById(R.id.editBandBandButton);
         editBandBandButton.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +45,15 @@ public class BandActivity extends Activity {
 
             }
         });
+        Button chooseMusicButton = (Button) findViewById(R.id.bandChooseMusic);
+        chooseMusicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFileChooser();
+
+            }
+        });
+
         Button uploadMusicButton = (Button) findViewById(R.id.bandUploadMusic);
         uploadMusicButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +63,9 @@ public class BandActivity extends Activity {
             }
         });
     }
+
+
+
 
 
     @Override

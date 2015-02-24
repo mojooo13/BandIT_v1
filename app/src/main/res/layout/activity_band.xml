@@ -48,7 +48,8 @@
         android:layout_below="@+id/membersBandTextView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout">
+        android:visibility="invisible"
+        android:id="@+id/BandpageMusicUploadLinearLayout">
 
         <Button
             android:visibility="visible"
@@ -71,17 +72,17 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
             android:textSize="20dp"
-            android:id="@+id/uploadFilePath"/>
+            android:id="@+id/uploadFilePathTextView"/>
 
      </LinearLayout>
 
     <Button
-        android:visibility="visible"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="EditBand"
         android:id="@+id/editBandBandButton"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@+id/membersBandTextView"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -93,7 +94,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_below="@+id/linearLayout"
+        android:layout_below="@+id/BandpageMusicUploadLinearLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 </RelativeLayout>
