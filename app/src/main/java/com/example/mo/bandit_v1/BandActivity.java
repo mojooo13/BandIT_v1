@@ -94,7 +94,7 @@ public class BandActivity extends Activity {
 
     private void showFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("audio/*");
+        intent.setType("Audio/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
 
 
@@ -124,7 +124,12 @@ public class BandActivity extends Activity {
                     String path = "no path";
                     try {
                         path = FileUtils.getPath(this, uri);
-                        System.out.println(path);
+                        if(path != null) {
+                            System.out.println(path);
+                        }
+                        else{
+                            System.out.println("path is null");
+                        }
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
