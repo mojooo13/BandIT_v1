@@ -38,7 +38,7 @@ public class BandActivity extends Activity {
 
         bandnameBandTextView.setText(bandData.getBandName());
         genreBandTextView.setText(bandData.getBandGenre());
-        membersBandTextView.setText(bandData.getBandMembers().toString());
+        membersBandTextView.setText(bandData.getBandMembers());
 
         Button editBandBandButton = (Button) findViewById(R.id.editBandBandButton);
         editBandBandButton.setOnClickListener(new View.OnClickListener() {
