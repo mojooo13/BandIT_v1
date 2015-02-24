@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ public class BandActivity extends Activity {
 
         final int id = getIntent().getExtras().getInt("id");
         BandData bandData = new BandData(id);
+        boolean fromFragment = getIntent().getExtras().getBoolean("fromFragment");
 
         TextView bandnameBandTextView = (TextView) findViewById(R.id.bandnameBandTextView);
         TextView genreBandTextView = (TextView) findViewById(R.id.genreBandTextView);
@@ -59,9 +61,14 @@ public class BandActivity extends Activity {
             @Override
             public void onClick(View v) {
                 showFileChooser();
-
             }
         });
+
+        if(fromFragment){
+            LinearLayout uploadLayout = (LinearLayout)findViewById(R.id.BandpageMusicUploadLinearLayout);
+            uploadLayout.setVisibility(View.VISIBLE);
+            editBandBandButton.setVisibility(View.VISIBLE);
+        }
     }
 
 
