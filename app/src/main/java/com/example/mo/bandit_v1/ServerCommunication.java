@@ -42,10 +42,10 @@ public class ServerCommunication {
         }
 
         HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet("http://192.168.88.47/?json="+query);
+        HttpGet httpget = new HttpGet("http://10.3.252.28/?json="+query);
         //192.168.88.47 => Zentrum der Macht
         //10.0.0.76
-        //10.3.252.28
+        //10.3.252.28 ->VoCore
         try {
             HttpResponse response = httpclient.execute(httpget);
             if(response != null) {
