@@ -49,7 +49,6 @@ public class EditProfilActivity extends Activity {
         saveEditProfilButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("button clicked");
                 EditText newVornameEditProfilEditText = (EditText) findViewById(R.id.newVornameEditProfilEditText);
                 EditText newNachnameEditProfilEditText = (EditText) findViewById(R.id.newNachnameEditProfilEditText);
                 EditText newAdresseEditProfilEditText = (EditText) findViewById(R.id.newAdresseEditProfilEditText);
