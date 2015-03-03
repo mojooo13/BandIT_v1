@@ -60,7 +60,7 @@ public class BandActivity extends Activity {
         uploadMusicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFileChooser();
+
             }
         });
 
@@ -145,8 +145,11 @@ public class BandActivity extends Activity {
                             System.out.println(path);
                         }
                         else{
-                            System.out.println("path is null");
+                            path = "no path found";
                         }
+                    TextView filepathTextView = (TextView) findViewById(R.id.uploadFilePathTextView);
+                    filepathTextView.setText(path);
+
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
@@ -157,6 +160,8 @@ public class BandActivity extends Activity {
                 }
                 break;
         }
+
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 }
