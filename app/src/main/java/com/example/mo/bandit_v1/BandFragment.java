@@ -72,18 +72,12 @@ public class BandFragment extends Fragment {
                 Datensatz gewaehlterDatensatz = datensaetze.get(position);
                 int idBand = gewaehlterDatensatz.id;
                 Intent intent = new Intent(getActivity(),BandActivity.class);
-<<<<<<< HEAD
 
-=======
->>>>>>> uploadMusic
                 intent.putExtra("id",idBand);
 
                 //intent.putExtra("bandID",idBand);
                 intent.putExtra("fromFragment",true);
-<<<<<<< HEAD
 
-=======
->>>>>>> uploadMusic
                 startActivity(intent);
             }
         });
