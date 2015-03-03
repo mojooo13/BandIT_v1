@@ -87,7 +87,7 @@ public class BandActivity extends Activity {
                 packageManager.queryIntentActivities(intent,
                         PackageManager.MATCH_DEFAULT_ONLY);
         return true;
-       // return list.size() > 0;
+        //return list.size() > 0;
     }
 
     private static final int FILE_SELECT_CODE = 0;
