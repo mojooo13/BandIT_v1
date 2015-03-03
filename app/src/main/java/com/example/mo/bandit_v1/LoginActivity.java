@@ -35,24 +35,18 @@ public class LoginActivity extends Activity{
                 EditText passwortLogInEditText = (EditText) findViewById(R.id.passwortLogInEditText);
                 String email = emailLogInEditText.getText().toString();
                 String passwort = passwortLogInEditText.getText().toString();
-                String loginCheck = "";
 
                 Intent intent = new Intent(LoginActivity.this,MainMenuActivity.class);
                 LoginData loginData = new LoginData(email,passwort);
-                loginCheck = loginData.login();
-                if(loginCheck.equals("true")){
+                if(loginData.login()){
                     Data data = new Data(loginData.line1, loginData.line2, loginData.line3, loginData.line4);
                     intent.putExtra("data",data);
                     intent.putExtra("profilID",5);
                     startActivity(intent);
                 }
-                else if(loginCheck.equals("wrongpw")){
+                else{
                     TextView errorLogInTextView = (TextView) findViewById(R.id.errorLogInTextView);
                     errorLogInTextView.setText("Email and/or Password is incorrect");
-                }
-                else if(loginCheck.equals("dc")){
-                    TextView errorLogInTextView = (TextView) findViewById(R.id.errorLogInTextView);
-                    errorLogInTextView.setText("No connection found");
                 }
             }
         });
