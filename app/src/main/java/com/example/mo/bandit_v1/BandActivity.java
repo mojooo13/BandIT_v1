@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,16 +29,15 @@ public class BandActivity extends Activity {
 
         final int id = getIntent().getExtras().getInt("id");
         BandData bandData = new BandData(id);
+        boolean fromFragment = getIntent().getExtras().getBoolean("fromFragment");
 
         TextView bandnameBandTextView = (TextView) findViewById(R.id.bandnameBandTextView);
         TextView genreBandTextView = (TextView) findViewById(R.id.genreBandTextView);
-        TextView instrumentsBandTextView = (TextView) findViewById(R.id.instrumentsBandTextView);
         TextView membersBandTextView = (TextView) findViewById(R.id.membersBandTextView);
-
+        TextView FilePathTextView = (TextView)findViewById(R.id.uploadFilePathTextView);
 
         bandnameBandTextView.setText(bandData.getBandName());
         genreBandTextView.setText(bandData.getBandGenre());
-        instrumentsBandTextView.setText(bandData.getBandInstruments());
         membersBandTextView.setText(bandData.getBandMembers());
 
         Button editBandBandButton = (Button) findViewById(R.id.editBandBandButton);
@@ -47,15 +47,32 @@ public class BandActivity extends Activity {
 
             }
         });
-        Button uploadMusicButton = (Button) findViewById(R.id.bandUploadMusic);
-        uploadMusicButton.setOnClickListener(new View.OnClickListener() {
+        Button chooseMusicButton = (Button) findViewById(R.id.bandChooseMusic);
+        chooseMusicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showFileChooser();
 
             }
         });
+
+        Button uploadMusicButton = (Button) findViewById(R.id.bandUploadMusic);
+        uploadMusicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        if(fromFragment){
+            LinearLayout uploadLayout = (LinearLayout)findViewById(R.id.BandpageMusicUploadLinearLayout);
+            uploadLayout.setVisibility(View.VISIBLE);
+            editBandBandButton.setVisibility(View.VISIBLE);
+        }
     }
+
+
+
 
 
     @Override
@@ -94,7 +111,7 @@ public class BandActivity extends Activity {
 
     private void showFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("audio/*");
+        intent.setType("Audio/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
 
 
@@ -124,7 +141,15 @@ public class BandActivity extends Activity {
                     String path = "no path";
                     try {
                         path = FileUtils.getPath(this, uri);
-                        System.out.println(path);
+                        if(path != null) {
+                            System.out.println(path);
+                        }
+                        else{
+                            path = "no path found";
+                        }
+                    TextView filepathTextView = (TextView) findViewById(R.id.uploadFilePathTextView);
+                    filepathTextView.setText(path);
+
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
@@ -135,6 +160,8 @@ public class BandActivity extends Activity {
                 }
                 break;
         }
+
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 }

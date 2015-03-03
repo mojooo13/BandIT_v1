@@ -108,6 +108,7 @@ public class SearchActivity extends Activity {
                         if(searchType.equals("band")){
                             Intent intent = new Intent(SearchActivity.this,BandActivity.class);
                             intent.putExtra("id",intentId);
+                            intent.putExtra("fromFragment",false);
                             startActivity(intent);
                         }
                         if(searchType.equals("event")){

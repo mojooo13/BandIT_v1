@@ -8,7 +8,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class EditProfilActivity extends Activity {
@@ -24,16 +29,20 @@ public class EditProfilActivity extends Activity {
         TextView instrumentEditTextTextView = (TextView) findViewById(R.id.instrumentEditProfilTextView);
         TextView genreEditTextTextView = (TextView) findViewById(R.id.genreEditProfilTextView);
         TextView emailEditTextTextView = (TextView) findViewById(R.id.emailEditProfilTextView);
+        TextView mobilenumberEditTextTextView = (TextView) findViewById(R.id.MobileNumberEditTextProfile);
 
         final Intent intent = getIntent();
 
-        vornameEditTextTextView.setText(intent.getStringExtra("vorname"));
-        nachnameEditTextTextView.setText(intent.getStringExtra("nachname"));
-        adresseEditTextTextView.setText(intent.getStringExtra("adress"));
-        instrumentEditTextTextView.setText(intent.getStringExtra("instrument"));
-        genreEditTextTextView.setText(intent.getStringExtra("genre"));
-        emailEditTextTextView.setText(intent.getStringExtra("email"));
+        vornameEditTextTextView.setText("First name: "+intent.getStringExtra("vorname"));
+        nachnameEditTextTextView.setText("Second name: "+intent.getStringExtra("nachname"));
+        adresseEditTextTextView.setText("Adress: "+intent.getStringExtra("adress"));
+        instrumentEditTextTextView.setText("Instrument:");
+        genreEditTextTextView.setText("Genre: "+intent.getStringExtra("genre"));
+        emailEditTextTextView.setText("E-Mail "+intent.getStringExtra("email"));
+        mobilenumberEditTextTextView.setText("Mobile number: "+intent.getStringExtra("mobileNumber"));
 
+        final RadioButton radioAddButton = (RadioButton) findViewById(R.id.profileRadioButtonAdd);
+        final RadioButton radioDeleteButton = (RadioButton) findViewById(R.id.profileRadioButtonDelete);
 
 
         Button saveEditProfilButton = (Button) findViewById(R.id.saveEditProfilButton);
@@ -46,6 +55,7 @@ public class EditProfilActivity extends Activity {
                 EditText newInstrumentEditProfilEditText = (EditText) findViewById(R.id.newInstrumentEditProfilEditText);
                 EditText newGenreEditProfilEditText = (EditText) findViewById(R.id.newGenreEditProfilEditText);
                 EditText newEmailEditProfilEditText = (EditText) findViewById(R.id.newEmailEditProfilEditText);
+                EditText newMobileNumberProfileEditText = (EditText) findViewById(R.id.NewMobileNumberEditTextProfile);
 
                 String newVornameString = newVornameEditProfilEditText.getText().toString();
                 String newNachnameString = newNachnameEditProfilEditText.getText().toString();
@@ -53,6 +63,7 @@ public class EditProfilActivity extends Activity {
                 String newInstrumentString = newInstrumentEditProfilEditText.getText().toString();
                 String newGenreString = newGenreEditProfilEditText.getText().toString();
                 String newEmailString = newEmailEditProfilEditText.getText().toString();
+                String newMobileNumberString = newMobileNumberProfileEditText.getText().toString();
 
                 if(newVornameString.isEmpty()){
                     newVornameString = intent.getStringExtra("vorname");
@@ -72,9 +83,50 @@ public class EditProfilActivity extends Activity {
                 if(newEmailString.isEmpty()){
                     newEmailString = intent.getStringExtra("email");
                 }
+                if(newMobileNumberString.isEmpty()){
+                    newMobileNumberString = intent.getStringExtra("mobileNumber");
+                }
+
 
                 ProfilData profilData = new ProfilData(newVornameString, newNachnameString, newEmailString, newAdresseString, newInstrumentString, newGenreString);
+                ServerCommunication con = new ServerCommunication();
+                JSONObject jsonObject= new JSONObject();
+                try {
+                    jsonObject.put("command","updateProfileData");
+                    jsonObject.put("firstName",newVornameString);
+                    jsonObject.put("secondName",newNachnameString);
+                    jsonObject.put("adress",newAdresseString);
+                    jsonObject.put("mobileNumber",newMobileNumberString);
+                    jsonObject.put("email",newEmailString);
+                    jsonObject.put("genre",newGenreString);
+                    jsonObject.put("instrument",newInstrumentString);
+                    jsonObject.put("id",intent.getIntExtra("id",0));
 
+                    if(radioAddButton.isChecked()){
+                        jsonObject.put("instrumentStatus","add");
+                    }
+                    else if(radioDeleteButton.isChecked()){
+                        jsonObject.put("instrumentStatus","delete");
+                    }
+                    else{
+                        jsonObject.put("instrumentStatus","none");
+                    }
+
+                    System.out.println(jsonObject.toString());
+                    String jsonString = con.communication(jsonObject.toString());
+                    jsonString = jsonString.substring(jsonString.indexOf("$")+1);
+                    System.out.println(jsonString);
+                    jsonObject = new JSONObject(jsonString);
+
+                    if(jsonObject.get("status").equals("emailAlreadyExits")){
+                        Toast.makeText(EditProfilActivity.this,
+                                "the chosen email already exists", Toast.LENGTH_SHORT).show();
+                        System.out.println("error email already exits");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 finish();
             }
         });

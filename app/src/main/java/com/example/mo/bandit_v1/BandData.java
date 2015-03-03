@@ -3,6 +3,7 @@ package com.example.mo.bandit_v1;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,15 +45,26 @@ public class BandData implements Parcelable {
 
             //Daten von id holen
             bandName = jsonObject.getString("bandName");
-            bandGenre = jsonObject.getString("BandGenre");
-            bandMembers = jsonObject.getString("bandMembers");
+            bandGenre = jsonObject.getString("bandGenre");
 
+            JSONArray memberArray = jsonObject.getJSONArray("members");
+            System.out.println(memberArray.toString());
+
+            String value = "";
+            for(int i = 0;i< memberArray.length();i++){
+                JSONObject jsonObject1 = memberArray.getJSONObject(i);
+                value = value+jsonObject1.getString("profileMember")+" ,";
+            }
+            value = value.substring(0,value.length()-1);
+            bandMembers = value;
+            System.out.println(bandGenre);
             System.out.println(bandMembers);
             //bandMusik = "Highway To Hell";
             //bandInstruments = "Guitar";
 
 
         } catch (JSONException e) {
+            System.out.println("error");
             e.printStackTrace();
         }
 

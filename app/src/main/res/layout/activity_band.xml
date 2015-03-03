@@ -38,35 +38,71 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <TextView
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Instruments"
-        android:id="@+id/instrumentsBandTextView"
+        android:orientation="vertical"
+        android:weightSum="1.0"
+        android:layout_marginTop="30dp"
         android:layout_below="@+id/membersBandTextView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:visibility="invisible"
+        android:id="@+id/BandpageMusicUploadLinearLayout">
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="0.5"
+            android:layout_marginTop="30dp">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Upload"
+            android:id="@+id/bandUploadMusic"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Add"
+            android:id="@+id/bandChooseMusic"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textSize="20dp"
+            android:id="@+id/uploadFilePathTextView"/>
+
+     </LinearLayout>
 
     <Button
-        android:visibility="visible"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="EditBand"
         android:id="@+id/editBandBandButton"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@+id/membersBandTextView"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <Button
+
+    <ListView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/BandMusicListView"
         android:visibility="visible"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Upload Music"
-        android:id="@+id/bandUploadMusic"
-        android:layout_above="@+id/editBandBandButton"
-        android:layout_alignRight="@+id/editBandBandButton"
-        android:layout_alignEnd="@+id/editBandBandButton" />
-
-
+        android:layout_weight="1"
+        android:layout_below="@+id/BandpageMusicUploadLinearLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

@@ -103,7 +103,14 @@ public class ProfilData implements Parcelable{
     public String getTelephonNr() {
         return telephonNr;
     }
-
+    public String getInstrumentString(){
+        String returnString = "";
+        for(int i = 0; i<profilInstruments.length;i++){
+            returnString = returnString+", "+profilInstruments[i];
+        }
+        returnString = returnString.substring(0,returnString.length()-1);
+        return returnString;
+    }
     protected ProfilData(Parcel in) {
         profilID = in.readInt();
         profilVorname = in.readString();

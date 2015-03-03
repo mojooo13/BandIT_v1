@@ -60,6 +60,7 @@ public class ProfilFragment extends Fragment{
             instrumentText = instrumentText + " " + profilData.getProfilInstruments()[i];
         }
 
+
         instrumentProfilTextView.setText(instrumentText);
         genreProfilTextView.setText("Genre: " + profilData.getProfilGenre().toString());
         Button editProfilButton = (Button) view.findViewById(R.id.editProfilButton);
@@ -67,11 +68,13 @@ public class ProfilFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),EditProfilActivity.class);
+                intent.putExtra("mobileNumber",profilData.getTelephonNr());
+                intent.putExtra("id",profilData.getId());
                 intent.putExtra("vorname",profilData.getProfilVorname().toString());
                 intent.putExtra("nachname",profilData.getProfilNachname().toString());
                 intent.putExtra("email",profilData.getProfilEmail().toString());
                 intent.putExtra("adress",profilData.getProfilAdress().toString());
-                //intent.putExtra("instrument",profilData.getProfilInstrument().toString());
+                intent.putExtra("instrument",profilData.getInstrumentString());
                 intent.putExtra("genre",profilData.getProfilGenre().toString());
                 startActivity(intent);
             }
