@@ -31,6 +31,7 @@ import java.net.URLEncoder;
 public class ServerCommunication {
 
     private static Context context;
+    String serverip = "http://172.16.3.26";
 
     public String communication (String json){
         //context = c;
@@ -50,7 +51,7 @@ public class ServerCommunication {
         }
 
         HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet("http://192.168.88.47/?json="+query);
+        HttpGet httpget = new HttpGet(serverip+"/?json="+query);
         //192.168.88.47 => Zentrum der Macht
         //10.0.0.76
         //10.3.252.28
@@ -95,7 +96,7 @@ public class ServerCommunication {
     }
 
 
-    public void postMusic(String json,String filePath){
+    public void postMusic(String jsonstring,String filePath){
 
         HttpURLConnection conn = null;
         DataOutputStream dos = null;
@@ -108,7 +109,7 @@ public class ServerCommunication {
         byte[] buffer;
         int maxBufferSize = 1 * 1024 * 1024;
         String responseFromServer = "";
-        String urlString = "http://192.168.88.47";
+        String urlString = serverip;
 
         try {
 
@@ -130,7 +131,7 @@ public class ServerCommunication {
             conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
             dos = new DataOutputStream(conn.getOutputStream());
             dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=\"jsonstring\"" +lineEnd + lineEnd + json + lineEnd );
+            dos.writeBytes("Content-Disposition: form-data; name=\"jsonstring\"" +lineEnd + lineEnd + jsonstring + lineEnd );
             dos.writeBytes(boundary + lineEnd + "Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + existingFileName + "\"" + lineEnd);
             dos.writeBytes(lineEnd);
             // create a buffer of maximum size

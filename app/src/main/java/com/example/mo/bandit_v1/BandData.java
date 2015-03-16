@@ -70,6 +70,21 @@ public class BandData implements Parcelable {
 
     }
 
+    public void postMusic(String filePath){
+        System.out.println("path:"+filePath);
+        String title = filePath.substring(filePath.lastIndexOf("/"));
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("bandID",bandID);
+            jsonObject.put("title",title);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ServerCommunication con = new ServerCommunication();
+        con.postMusic(jsonObject.toString(),filePath);
+    }
+
     //Create Band
     public  BandData(String bandName, String bandGenre, int bandID){
         this.bandName = bandName;
