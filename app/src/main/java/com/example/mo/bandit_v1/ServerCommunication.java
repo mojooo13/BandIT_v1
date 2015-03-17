@@ -128,9 +128,7 @@ public class ServerCommunication {
 
             dos = new DataOutputStream(conn.getOutputStream());
             dos.writeBytes(twoHyphens + boundary + lineEnd);
-            System.out.println(jsonstring);
             dos.writeBytes("Content-Disposition: form-data; name=\"jsonstring\";filename=\"json\"" +lineEnd + lineEnd + jsonstring + lineEnd );
-
             dos.writeBytes(twoHyphens + boundary + lineEnd + "Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + existingFileName + "\"" + lineEnd);
             dos.writeBytes(lineEnd);
             // create a buffer of maximum size
