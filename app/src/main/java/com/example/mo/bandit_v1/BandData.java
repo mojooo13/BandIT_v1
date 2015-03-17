@@ -72,7 +72,7 @@ public class BandData implements Parcelable {
 
     public void postMusic(String filePath){
         System.out.println("path:"+filePath);
-        String title = filePath.substring(filePath.lastIndexOf("/"));
+        String title = filePath.substring(filePath.lastIndexOf("/")+1);
 
         JSONObject jsonObject = new JSONObject();
         try {

@@ -31,11 +31,13 @@ import java.net.URLEncoder;
 public class ServerCommunication {
 
     private static Context context;
-    String serverip = "http://172.16.3.26";
+    String serverip = "http://10.3.252.42";
 
     public String communication (String json){
         //context = c;
-
+        //192.168.88.47 => Zentrum der Macht
+        //10.0.0.76
+        //10.3.252.28
         String l="";
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -52,9 +54,7 @@ public class ServerCommunication {
 
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(serverip+"/?json="+query);
-        //192.168.88.47 => Zentrum der Macht
-        //10.0.0.76
-        //10.3.252.28
+
         try {
             HttpResponse response = httpclient.execute(httpget);
             if(response != null) {
@@ -110,29 +110,28 @@ public class ServerCommunication {
         int maxBufferSize = 1 * 1024 * 1024;
         String responseFromServer = "";
         String urlString = serverip;
+        String dosString = "";
 
         try {
 
             //------------------ CLIENT REQUEST
             FileInputStream fileInputStream = new FileInputStream(new File(existingFileName));
-            // open a URL connection to the Servlet
             URL url = new URL(urlString);
-            // Open a HTTP connection to the URL
+
             conn = (HttpURLConnection) url.openConnection();
-            // Allow Inputs
             conn.setDoInput(true);
-            // Allow Outputs
             conn.setDoOutput(true);
-            // Don't use a cached copy.
             conn.setUseCaches(false);
-            // Use a post method.
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Connection", "Keep-Alive");
-            conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+            conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+
             dos = new DataOutputStream(conn.getOutputStream());
             dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=\"jsonstring\"" +lineEnd + lineEnd + jsonstring + lineEnd );
-            dos.writeBytes(boundary + lineEnd + "Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + existingFileName + "\"" + lineEnd);
+            System.out.println(jsonstring);
+            dos.writeBytes("Content-Disposition: form-data; name=\"jsonstring\";filename=\"json\"" +lineEnd + lineEnd + jsonstring + lineEnd );
+
+            dos.writeBytes(twoHyphens + boundary + lineEnd + "Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + existingFileName + "\"" + lineEnd);
             dos.writeBytes(lineEnd);
             // create a buffer of maximum size
             bytesAvailable = fileInputStream.available();
@@ -154,6 +153,7 @@ public class ServerCommunication {
             dos.writeBytes(lineEnd);
             dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
             // close streams
+            System.out.println(dosString);
             Log.e("Debug", "File is written");
             fileInputStream.close();
             dos.flush();
