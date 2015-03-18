@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -119,8 +118,7 @@ public class EditProfilActivity extends Activity {
                     jsonObject = new JSONObject(jsonString);
 
                     if(jsonObject.get("status").equals("emailAlreadyExits")){
-                        Toast.makeText(EditProfilActivity.this,
-                                "the chosen email already exists", Toast.LENGTH_SHORT).show();
+
                         System.out.println("error email already exits");
                     }
 

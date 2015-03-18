@@ -53,9 +53,9 @@ public class BandData implements Parcelable {
             String value = "";
             for(int i = 0;i< memberArray.length();i++){
                 JSONObject jsonObject1 = memberArray.getJSONObject(i);
-                value = value+jsonObject1.getString("profileMember")+" ,";
+                value = value+jsonObject1.getString("profileMember")+", ";
             }
-            value = value.substring(0,value.length()-1);
+            value = value.substring(0,value.lastIndexOf(",")-1);
             bandMembers = value;
             System.out.println(bandGenre);
             System.out.println(bandMembers);
@@ -68,6 +68,21 @@ public class BandData implements Parcelable {
             e.printStackTrace();
         }
 
+    }
+
+    public void postMusic(String filePath){
+        System.out.println("path:"+filePath);
+        String title = filePath.substring(filePath.lastIndexOf("/")+1);
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("bandID",bandID);
+            jsonObject.put("title",title);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ServerCommunication con = new ServerCommunication();
+        con.postMusic(jsonObject.toString(),filePath);
     }
 
     //Create Band
