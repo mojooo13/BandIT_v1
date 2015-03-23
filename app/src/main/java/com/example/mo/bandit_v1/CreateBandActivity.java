@@ -68,7 +68,7 @@ public class CreateBandActivity extends Activity {
                     String email = data.profilData.profilEmail;
                     String passwort = data.profilData.passwort;
                     LoginData loginData = new LoginData(email,passwort);
-                    if(loginData.login()){
+                    if(loginData.login().equals("true")){
                         data = new Data(loginData.line1, loginData.line2, loginData.line3, loginData.line4);
 
                         //finish();
