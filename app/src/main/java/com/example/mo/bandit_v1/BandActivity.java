@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -66,6 +68,24 @@ public class BandActivity extends Activity {
 
             }
         });
+
+        Button editBandButton = (Button) findViewById(R.id.editBandBandButton);
+        editBandBandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    MediaPlayer player = new MediaPlayer();
+                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    player.setDataSource("http://10.3.252.42/musicupload/2_1.mp3");
+                    player.prepare();
+                    player.start();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+
+            }
+        });
+
 
         if(fromFragment){
             LinearLayout uploadLayout = (LinearLayout)findViewById(R.id.BandpageMusicUploadLinearLayout);
