@@ -38,15 +38,24 @@ public class LoginActivity extends Activity{
 
                 Intent intent = new Intent(LoginActivity.this,MainMenuActivity.class);
                 LoginData loginData = new LoginData(email,passwort);
-                if(loginData.login()){
+                String loginTry = loginData.login();
+                if(loginTry.equals("true")){
                     Data data = new Data(loginData.line1, loginData.line2, loginData.line3, loginData.line4);
                     intent.putExtra("data",data);
                     intent.putExtra("profilID",5);
                     startActivity(intent);
                 }
-                else{
+                else if(loginTry.equals("nopassword")){
                     TextView errorLogInTextView = (TextView) findViewById(R.id.errorLogInTextView);
                     errorLogInTextView.setText("Email and/or Password is incorrect");
+                }
+                else if(loginTry.equals("nocon")){
+                    TextView errorLogInTextView = (TextView) findViewById(R.id.errorLogInTextView);
+                    errorLogInTextView.setText("No connection to server");
+                }
+                else{
+                    TextView errorLogInTextView = (TextView) findViewById(R.id.errorLogInTextView);
+                    errorLogInTextView.setText("Some kind of strange error occured");
                 }
             }
         });

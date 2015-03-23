@@ -28,13 +28,13 @@ public class BandActivity extends Activity {
         setContentView(R.layout.activity_band);
 
         final int id = getIntent().getExtras().getInt("id");
-        BandData bandData = new BandData(id);
+        final BandData bandData = new BandData(id);
         boolean fromFragment = getIntent().getExtras().getBoolean("fromFragment");
 
         TextView bandnameBandTextView = (TextView) findViewById(R.id.bandnameBandTextView);
         TextView genreBandTextView = (TextView) findViewById(R.id.genreBandTextView);
         TextView membersBandTextView = (TextView) findViewById(R.id.membersBandTextView);
-        TextView FilePathTextView = (TextView)findViewById(R.id.uploadFilePathTextView);
+        final TextView filePathTextView = (TextView)findViewById(R.id.uploadFilePathTextView);
 
         bandnameBandTextView.setText(bandData.getBandName());
         genreBandTextView.setText(bandData.getBandGenre());
@@ -60,6 +60,9 @@ public class BandActivity extends Activity {
         uploadMusicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!filePathTextView.getText().equals(null)){
+                    bandData.postMusic(filePathTextView.getText().toString());
+                }
 
             }
         });
