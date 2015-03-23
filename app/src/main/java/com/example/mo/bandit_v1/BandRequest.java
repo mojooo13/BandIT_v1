@@ -6,6 +6,7 @@ package com.example.mo.bandit_v1;
 public class BandRequest {
     String bandName;
     String text;
-    int id;
+    String bandGenre;
+    int requestID;
     boolean status;
 }
