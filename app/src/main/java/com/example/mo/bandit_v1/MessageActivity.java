@@ -20,8 +20,8 @@ import java.util.ArrayList;
 
 public class MessageActivity extends Activity {
 
-    String[] dates;
-    String[] senderName;
+    ArrayList<String> field1 = new ArrayList<String>();
+    ArrayList<String> field2 = new ArrayList<String>();
 
     private MyItemAdapter myAdapter;
 
@@ -30,18 +30,18 @@ public class MessageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-        final int profilID = getIntent().getExtras().getInt("profilID");
-        final NotificationData notificationData = new NotificationData(profilID);
+        Intent intent = getIntent();
+        final Data data = intent.getParcelableExtra("data");
 
-        final int[] notificationIDs = notificationData.notificationIDs;
-        dates = new String[notificationIDs.length];
-        senderName = new String[notificationIDs.length];
-
-        for (int i = 0; i<notificationIDs.length;i++){
-            NotificationData n = new NotificationData(notificationIDs[i],1);
-            dates[i] = n.date+": ";
-            senderName[i] = n.sendername;
+        for (int i = 0; i<data.notificationData.bandRequests.size();i++){
+            field1.add("B-Request: ");
+            field2.add(data.notificationData.bandRequests.get(i).bandName);
         }
+        for (int i = 0; i<data.notificationData.eventReuqests.size();i++){
+            field1.add("E-Request: ");
+            field2.add(data.notificationData.eventReuqests.get(i).eventName);
+        }
+
         initDatensaetze();
         ListView notificationListView = (ListView) findViewById(R.id.notificationListView);
 
@@ -52,20 +52,29 @@ public class MessageActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Datensatz gewaehlterDatensatz = datensaetze.get(position);
-                int notificationID = notificationIDs[position];
+                //int notificationID = notificationIDs[position];
                 Intent intent = new Intent(MessageActivity.this,MessageDetailActivity.class);
-                intent.putExtra("notificationID",notificationID);
+                if(gewaehlterDatensatz.typ.equals("B-Request: ")){
+                    intent.putExtra("bandRequest",data.notificationData.bandRequests.get(position));//-> final data
+                    intent.putExtra("status","band");
+                }
+                else{
+                    intent.putExtra("eventRequest",data.notificationData.eventReuqests.get(position-data.notificationData.bandRequests.size()));
+                    intent.putExtra("status","event");
+                }
+
+
                 startActivity(intent);
             }
         });
     }
 
     private class Datensatz {
-        public String name;  // besser setter und getter-Methoden schreiben, stört hier aber...
-        public String date; // die Umwandlung von Datum lasse ich weg - das ist ein anderes (großes) Problem
-        public Datensatz(String name, String date) {
+        public String typ;  // besser setter und getter-Methoden schreiben, stört hier aber...
+        public String name; // die Umwandlung von Datum lasse ich weg - das ist ein anderes (großes) Problem
+        public Datensatz(String typ, String name) {
+            this.typ = typ;
             this.name = name;
-            this.date = date;
         }
     }
 
@@ -73,9 +82,9 @@ public class MessageActivity extends Activity {
 
     private void initDatensaetze() {
         datensaetze = new ArrayList<Datensatz>();
-        for (int i=0; i<senderName.length; i++) {
+        for (int i=0; i<field1.size(); i++) {
             // hier aus Arrays auslesen, bei dir wahrscheinlich anders...
-            Datensatz datensatz = new Datensatz(senderName[i],dates[i]);
+            Datensatz datensatz = new Datensatz(field1.get(i),field2.get(i));
             datensaetze.add(datensatz);
         }
     }
@@ -104,7 +113,7 @@ public class MessageActivity extends Activity {
             view.setId((int) getItemId(position));
             TextView datumTextView = (TextView) view.findViewById(R.id.name);
             TextView nameTextView = (TextView) view.findViewById(R.id.datum);
-            datumTextView.setText(datensatz.date);
+            datumTextView.setText(datensatz.typ);
             nameTextView.setText(datensatz.name);
         }
     }

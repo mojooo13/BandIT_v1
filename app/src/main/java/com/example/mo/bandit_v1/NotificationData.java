@@ -1,70 +1,55 @@
 package com.example.mo.bandit_v1;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
  * Created by Mo on 01.12.2014.
  */
-public class NotificationData {
-    int senderID;
-    int receiverBandID;
-    int notificationID;
-    int[] notificationIDs;
-    int status = 0; //1...Annahme 0...noch nicht beantwortet -1...abgelent
-    String bandname;
-    String date;
-    String message;
-    String sendername;
-    ArrayList<BandRequest> bandRequests;
-    ArrayList<EventReuqest> eventReuqests;
+public class NotificationData implements Parcelable {
+    ArrayList<BandRequest> bandRequests = new ArrayList();
+    ArrayList<EventReuqest> eventReuqests = new ArrayList();
 
-
-
-    //Aufruf der Message Activity
-    public NotificationData(int senderID){
-        this.senderID = senderID;
-
-        //von Datenbank
-        notificationIDs = new int[]{1,2,3,4};
+    public NotificationData(ArrayList<BandRequest> bandRequests, ArrayList<EventReuqest> eventReuqests) {
+        this.bandRequests = bandRequests;
+        this.eventReuqests = eventReuqests;
     }
 
-    //Message Detail Activity
-    public NotificationData(int notificationID, int defaulT){
-        this.notificationID = notificationID;
+    public NotificationData() {
 
-        //von Datenbank
-
-        bandname = "ACDC";
-        date = "20.11.2014";
-        message = "Hallo ich würde Ihre Band ACDC gerne zu unserem Sommerfest einladen. Wir können ihnen 200€ Gage für " +
-                "einen dreistündigen Auftritt bieten. Außerdem übernehmen wir die Versorgungs und Transportkosten. Mit " +
-                "freundliche Grüßen Moritz Hauch";
-        sendername = "Moritz Hauch";
     }
 
-
-    //Einladung Event
-    public NotificationData(String date, String message, int senderID, String bandname){
-        this.senderID = senderID;
-        this.message = message;
-        this.date = date;
-        this.bandname = bandname;
-        status = 0;
+    protected NotificationData(Parcel in) {
+        bandRequests = new ArrayList<BandRequest>();
+        in.readTypedList(bandRequests,BandRequest.CREATOR);
+        eventReuqests = new ArrayList<EventReuqest>();
+        in.readTypedList(eventReuqests,EventReuqest.CREATOR);
     }
 
-    public void getMessages(int notificationID){
-        //Datenbank sucht nach id
-
-        status = 1;
-        date = "20.10.2014";
-        message = "Hallo ich würde Ihre Band ACDC gerne zu unserem Sommerfest einladen. Wir können ihnen 200€ Gage für " +
-                "einen dreistündigen Auftritt bieten. Außerdem übernehmen wir die Versorgungs und Transportkosten. Mit " +
-                "freundliche Grüßen Moritz Hauch";
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    //Annahme/Ablehnen
-    public void setStatus(int status){
-        this.status = status;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(bandRequests);
+        dest.writeTypedList(eventReuqests);
     }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<NotificationData> CREATOR = new Parcelable.Creator<NotificationData>() {
+        @Override
+        public NotificationData createFromParcel(Parcel in) {
+            return new NotificationData(in);
+        }
+
+        @Override
+        public NotificationData[] newArray(int size) {
+            return new NotificationData[size];
+        }
+    };
 
 }

@@ -15,7 +15,7 @@ public class Data implements Parcelable {//Klassen ins Intent
     ProfilData profilData = new ProfilData();
     ArrayList<BandData> bandDatas;
     ArrayList<EventData> eventDatas;
-    //ArrayList<NotificationData> notificationDatas;
+    NotificationData notificationData;
     String line1;
     String line2;
     String line3;
@@ -67,14 +67,19 @@ public class Data implements Parcelable {//Klassen ins Intent
                 eventDatas.add(eventData);
             }
 
-            /*
+
+
             JSONArray jsonArray3 = jsonObject4.getJSONArray("bandRequest");
-            notificationDatas = new ArrayList<NotificationData>();
+            JSONArray jsonArray4 = jsonObject4.getJSONArray("eventRequest");
+            notificationData = new NotificationData();
             for(int i=0;i< jsonArray3.length();i++){
-                JSONObject jsonObject = jsonArray3.getJSONObject(i);
-                NotificationData notificationData = new NotificationData(jsonObject.getString("bandName"),jsonObject.getString("eventName"),jsonObject.getString("eventGenre"));
-                eventDatas.add(eventData);
-            }*/
+                JSONObject jsonObjectBand = jsonArray3.getJSONObject(i);
+                JSONObject jsonObjectEvent = jsonArray4.getJSONObject(i);
+                BandRequest bandRequest = new BandRequest(jsonObjectBand.getInt("requestId"),jsonObjectBand.getInt("bandId"),jsonObjectBand.getString("bandGenre"),jsonObjectBand.getString("text"),jsonObjectBand.getString("bandName"));
+                EventReuqest eventReuqest = new EventReuqest(jsonObjectEvent.getInt("requestId"),jsonObjectEvent.getInt("requestSenderId"),jsonObjectEvent.getInt("eventID"),jsonObjectEvent.getString("eventName"),jsonObjectEvent.getString("eventGenre"),jsonObjectEvent.getString("eventLocation"),jsonObjectEvent.getString("eventDate"),jsonObjectEvent.getString("eventTime"),jsonObjectEvent.getString("requestFirstName"),jsonObjectEvent.getString("requestSecondName"),jsonObjectEvent.getString("text"),jsonObjectEvent.getString("bandname"));
+                notificationData.bandRequests.add(bandRequest);
+                notificationData.eventReuqests.add(eventReuqest);
+            }
 
 
         }catch (Exception e){
@@ -94,6 +99,7 @@ public class Data implements Parcelable {//Klassen ins Intent
         in.readTypedList(bandDatas,BandData.CREATOR);
         eventDatas = new ArrayList<EventData>();
         in.readTypedList(eventDatas,EventData.CREATOR);
+        notificationData = in.readParcelable(NotificationData.class.getClassLoader());
     }
 
     @Override
@@ -113,6 +119,8 @@ public class Data implements Parcelable {//Klassen ins Intent
         dest.writeString(line3);
         dest.writeTypedList(bandDatas);
         dest.writeTypedList(eventDatas);
+        //dest.writeTypedList(notificationDatas);
+        dest.writeParcelable(notificationData, flags);
     }
 
     @SuppressWarnings("unused")

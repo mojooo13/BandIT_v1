@@ -15,11 +15,15 @@ public class MainMenuActivity extends Activity {
     Fragment fragmentTab1 = new ProfilFragment();
     Fragment fragmentTab2 = new BandFragment();
     Fragment fragmentTab3 = new EventFragment();
+    Data data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        Intent intent = getIntent();
+        data = intent.getParcelableExtra("data");
 
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -67,6 +71,7 @@ public class MainMenuActivity extends Activity {
         if(id == R.id.action_message){
             Intent intent = new Intent(MainMenuActivity.this,MessageActivity.class);
 
+            intent.putExtra("data",data);
             intent.putExtra("profilID",profilID);
             startActivity(intent);        }
 

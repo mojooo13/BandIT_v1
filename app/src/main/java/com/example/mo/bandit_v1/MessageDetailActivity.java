@@ -1,6 +1,7 @@
 package com.example.mo.bandit_v1;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,41 +15,108 @@ public class MessageDetailActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message_detail);
 
-        int notificationID = getIntent().getExtras().getInt("notificationID");
-        final NotificationData notificationData = new NotificationData(notificationID,1);
-        String date = notificationData.date;
-        String message = notificationData.message;
-        String sendername = notificationData.sendername;
 
-        TextView dateNotificationDetailActivityTextView = (TextView) findViewById(R.id.dateNotificationDetailActivityTextView);
-        TextView messageNotificationDetailActivityTextView = (TextView) findViewById(R.id.messageNotificationDetailActivityTextView);
-        TextView sendernameNotificationDetailActivityTextView = (TextView) findViewById(R.id.sendernameNotificationDetailActivityTextView);
+        BandRequest bandRequest;
+        EventReuqest eventReuqest;
 
-        dateNotificationDetailActivityTextView.setText(date);
-        messageNotificationDetailActivityTextView.setText(message);
-        sendernameNotificationDetailActivityTextView.setText(sendername);
 
-        Button acceptMessageDetailActivityButton = (Button) findViewById(R.id.acceptMessageDetailActivityButton);
-        Button declineMessageDetailActivityButton = (Button) findViewById(R.id.declineMessageDetailActivityButton);
 
-        acceptMessageDetailActivityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notificationData.setStatus(1);
-                finish();
-            }
-        });
+        Intent intent = getIntent();
+        String status = intent.getStringExtra("status");
+        if(status.equals("band")){
+            String bandname;
+            String bandgenre;
+            String text;
 
-        declineMessageDetailActivityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notificationData.setStatus(-1);
-                finish();
-            }
-        });
+            setContentView(R.layout.bandrequest_detail);
+            bandRequest = intent.getParcelableExtra("bandRequest");
+            bandname = bandRequest.bandName;
+            bandgenre = bandRequest.bandGenre;
+            text = bandRequest.text;
 
+            TextView bandNameTextView = (TextView) findViewById(R.id.bandnameBandRequest);
+            TextView bandGenreTextView = (TextView) findViewById(R.id.bandgenreBandRequest);
+            TextView messageTextView = (TextView) findViewById(R.id.textEventRequest);
+
+            bandNameTextView.setText("BandName: "+bandname);
+            bandGenreTextView.setText("BandGenre: "+bandgenre);
+            messageTextView.setText("Message: "+text);
+
+            Button acceptButton = (Button) findViewById(R.id.acceptButtontBandRequest);
+            Button declineButton = (Button) findViewById(R.id.declineButtonBandRequest);
+
+            acceptButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+            declineButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }
+        else{
+            setContentView(R.layout.eventrequest_detail);
+            eventReuqest = intent.getParcelableExtra("eventRequest");
+
+            String eventname;
+            String eventgenre;
+            String date;
+            String time;
+            String location;
+            String senderFirstName;
+            String senderSecoundName;
+            String message;
+
+
+            eventname = eventReuqest.eventName;
+            eventgenre = eventReuqest.eventGenre;
+            date = eventReuqest.eventDate;
+            time = eventReuqest.eventTime;
+            location = eventReuqest.eventLocation;
+            senderFirstName = eventReuqest.requestFirstName;
+            senderSecoundName = eventReuqest.requestSecondName;
+            message = eventReuqest.text;
+
+            TextView eventnameTextView = (TextView) findViewById(R.id.eventnameEventRequest);
+            TextView eventgenreTextView = (TextView) findViewById(R.id.genreEventRequest);
+            TextView dateTextView = (TextView) findViewById(R.id.dateEventRequest);
+            TextView timeTextView = (TextView) findViewById(R.id.timeEventRequest);
+            TextView locationTextView = (TextView) findViewById(R.id.locationEventRequest);
+            TextView senderFirstNameTextView = (TextView) findViewById(R.id.senderFirstNameEventRequest);
+            TextView senderSecoundNameTextView = (TextView) findViewById(R.id.senderSecoundNameEventRequest);
+            TextView messageTextView = (TextView) findViewById(R.id.textEventRequest);
+
+            eventnameTextView.setText("EventName: "+eventname);
+            eventgenreTextView.setText("EventGenre: "+eventgenre);
+            dateTextView.setText("Date: "+date);
+            timeTextView.setText("Time: "+time);
+            locationTextView.setText("Location: "+location);
+            senderFirstNameTextView.setText("Sender Firstname: "+senderFirstName);
+            senderSecoundNameTextView.setText("Sender Secoundname: "+senderSecoundName);
+            messageTextView.setText("Message: "+message);
+
+            Button acceptButton = (Button) findViewById(R.id.acceptButtontEventRequest);
+            Button declineButton = (Button) findViewById(R.id.declineButtonEventRequest);
+
+            acceptButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            declineButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }
     }
 
 
