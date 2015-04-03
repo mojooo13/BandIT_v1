@@ -42,7 +42,6 @@ public class BandActivity extends Activity {
 
         final int id = getIntent().getExtras().getInt("id");
 
-
         final BandData bandData = new BandData(id);
         final boolean fromFragment = getIntent().getExtras().getBoolean("fromFragment");
         System.out.println(bandData.getBandID());
@@ -55,64 +54,54 @@ public class BandActivity extends Activity {
         genreBandTextView.setText(bandData.getBandGenre());
         membersBandTextView.setText(bandData.getBandMembers());
 
-
-        new Thread(new Runnable() {
-            public void run() {
-                Button editBandBandButton = (Button) findViewById(R.id.editBandBandButton);
-                editBandBandButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
-
-                if(fromFragment){
-                    LinearLayout uploadLayout = (LinearLayout)findViewById(R.id.BandpageMusicUploadLinearLayout);
-                    uploadLayout.setVisibility(View.VISIBLE);
-                    editBandBandButton.setVisibility(View.VISIBLE);
-                }
-                Button chooseMusicButton = (Button) findViewById(R.id.bandChooseMusic);
-                chooseMusicButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showFileChooser();
-
-                    }
-                });
-
-                Button uploadMusicButton = (Button) findViewById(R.id.bandUploadMusic);
-                uploadMusicButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(!filePathTextView.getText().equals(null)){
-                            bandData.postMusic(filePathTextView.getText().toString());
-                        }
-
-                    }
-                });
-
-
-
-                Button editBandButton = (Button) findViewById(R.id.editBandBandButton);
-                editBandBandButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            MediaPlayer player = new MediaPlayer();
-                            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                            player.setDataSource("http://10.3.252.42/musicupload/2_1.mp3");
-                            player.prepare();
-                            player.start();
-                        } catch (Exception e) {
-                            // TODO: handle exception
-                        }
-
-                    }
-                });
+        Button editBandBandButton = (Button) findViewById(R.id.editBandBandButton);
+        editBandBandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
-        }).start();
+        });
 
+        if(fromFragment){
+            LinearLayout uploadLayout = (LinearLayout)findViewById(R.id.BandpageMusicUploadLinearLayout);
+            uploadLayout.setVisibility(View.VISIBLE);
+            editBandBandButton.setVisibility(View.VISIBLE);
+        }
+        Button chooseMusicButton = (Button) findViewById(R.id.bandChooseMusic);
+        chooseMusicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFileChooser();
+
+            }
+        });
+
+        Button uploadMusicButton = (Button) findViewById(R.id.bandUploadMusic);
+        uploadMusicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!filePathTextView.getText().equals(null)){
+                    bandData.postMusic(filePathTextView.getText().toString());
+                }
+
+            }
+        });
+
+        Button editBandButton = (Button) findViewById(R.id.editBandBandButton);
+        editBandBandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    MediaPlayer player = new MediaPlayer();
+                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    player.setDataSource("http://10.3.252.42/musicupload/2_1.mp3");
+                    player.prepare();
+                    player.start();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+        });
 
         initListDataTable(id);
 
@@ -130,10 +119,6 @@ public class BandActivity extends Activity {
             }
         });
     }
-
-
-
-
 
 
     @Override
