@@ -15,7 +15,7 @@ public class Data implements Parcelable {//Klassen ins Intent
     ProfilData profilData = new ProfilData();
     ArrayList<BandData> bandDatas;
     ArrayList<EventData> eventDatas;
-    NotificationData notificationData;
+    NotificationData notificationData = new NotificationData(new ArrayList<BandRequest>(),new ArrayList<EventReuqest>()); //gegen Nullpoint
     String line1;
     String line2;
     String line3;
@@ -68,7 +68,7 @@ public class Data implements Parcelable {//Klassen ins Intent
             }
 
 
-
+/*
             JSONArray jsonArray3 = jsonObject4.getJSONArray("bandRequest");
             JSONArray jsonArray4 = jsonObject4.getJSONArray("eventRequest");
             notificationData = new NotificationData();
@@ -80,7 +80,32 @@ public class Data implements Parcelable {//Klassen ins Intent
                 notificationData.bandRequests.add(bandRequest);
                 notificationData.eventReuqests.add(eventReuqest);
             }
+            */
+            //BandRequest
+            try {
+                JSONArray jsonArray3 = jsonObject4.getJSONArray("bandRequest");
+                notificationData = new NotificationData();
+                for (int i = 0; i < jsonArray3.length(); i++) {
+                    JSONObject jsonObjectBand = jsonArray3.getJSONObject(i);
+                    BandRequest bandRequest = new BandRequest(jsonObjectBand.getInt("requestId"), jsonObjectBand.getInt("bandId"), jsonObjectBand.getString("bandGenre"), jsonObjectBand.getString("text"), jsonObjectBand.getString("bandName"));
+                    notificationData.bandRequests.add(bandRequest);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
+            //EventRequest
+            try {
+                JSONArray jsonArray4 = jsonObject4.getJSONArray("eventRequest");
+                for (int i = 0; i < jsonArray4.length(); i++) {
+                    JSONObject jsonObjectEvent = jsonArray4.getJSONObject(i);
+                    EventReuqest eventReuqest = new EventReuqest(jsonObjectEvent.getInt("requestId"), jsonObjectEvent.getInt("requestSenderId"), jsonObjectEvent.getInt("eventID"), jsonObjectEvent.getString("eventName"), jsonObjectEvent.getString("eventGenre"), jsonObjectEvent.getString("eventLocation"), jsonObjectEvent.getString("eventDate"), jsonObjectEvent.getString("eventTime"), jsonObjectEvent.getString("requestFirstName"), jsonObjectEvent.getString("requestSecondName"), jsonObjectEvent.getString("text"), jsonObjectEvent.getString("bandname"));
+                    System.out.println(eventReuqest);
+                    notificationData.eventReuqests.add(eventReuqest);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
         }catch (Exception e){
             e.printStackTrace();

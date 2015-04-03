@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class MessageDetailActivity extends Activity {
 
@@ -17,13 +20,15 @@ public class MessageDetailActivity extends Activity {
         super.onCreate(savedInstanceState);
 
 
-        BandRequest bandRequest;
+        final BandRequest bandRequest;
         EventReuqest eventReuqest;
+
 
 
 
         Intent intent = getIntent();
         String status = intent.getStringExtra("status");
+        final Data data = intent.getParcelableExtra("data");
         if(status.equals("band")){
             String bandname;
             String bandgenre;
@@ -49,14 +54,44 @@ public class MessageDetailActivity extends Activity {
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ServerCommunication serverCommunication = new ServerCommunication();
+                    JSONObject jsonObject= new JSONObject();
+                    try {
+                        jsonObject.put("command","updateBandMember");
+                        jsonObject.put("profileId",data.profilData.profilID);
+                        jsonObject.put("order","accept");
+                        jsonObject.put("bandId",bandRequest.bandID);
 
+                        System.out.println(jsonObject.toString());
+                        String jsonString = serverCommunication.communication(jsonObject.toString());
+
+                        System.out.println("Antwort: "+jsonString);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    finish();
                 }
             });
 
             declineButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ServerCommunication serverCommunication = new ServerCommunication();
+                    JSONObject jsonObject= new JSONObject();
+                    try {
+                        jsonObject.put("command","updateBandMember");
+                        jsonObject.put("profileId",data.profilData.profilID);
+                        jsonObject.put("order","delete");
+                        jsonObject.put("bandId",bandRequest.bandID);
 
+                        System.out.println(jsonObject.toString());
+                        String jsonString = serverCommunication.communication(jsonObject.toString());
+
+                        System.out.println("Antwort: "+jsonString);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    finish();
                 }
             });
         }

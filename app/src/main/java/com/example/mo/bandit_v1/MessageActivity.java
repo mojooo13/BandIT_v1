@@ -32,14 +32,20 @@ public class MessageActivity extends Activity {
 
         Intent intent = getIntent();
         final Data data = intent.getParcelableExtra("data");
+        if(data.notificationData!=null){
+            if(data.notificationData.bandRequests!=null) {
+                for (int i = 0; i < data.notificationData.bandRequests.size(); i++) {
+                    field1.add("B-Request: ");
+                    field2.add(data.notificationData.bandRequests.get(i).bandName);
+                }
+            }
+            if(data.notificationData.eventReuqests!=null) {
+                for (int i = 0; i < data.notificationData.eventReuqests.size(); i++) {
+                    field1.add("E-Request: ");
+                    field2.add(data.notificationData.eventReuqests.get(i).eventName);
+                }
+            }
 
-        for (int i = 0; i<data.notificationData.bandRequests.size();i++){
-            field1.add("B-Request: ");
-            field2.add(data.notificationData.bandRequests.get(i).bandName);
-        }
-        for (int i = 0; i<data.notificationData.eventReuqests.size();i++){
-            field1.add("E-Request: ");
-            field2.add(data.notificationData.eventReuqests.get(i).eventName);
         }
 
         initDatensaetze();
@@ -57,12 +63,13 @@ public class MessageActivity extends Activity {
                 if(gewaehlterDatensatz.typ.equals("B-Request: ")){
                     intent.putExtra("bandRequest",data.notificationData.bandRequests.get(position));//-> final data
                     intent.putExtra("status","band");
+                    intent.putExtra("data",data);
                 }
                 else{
                     intent.putExtra("eventRequest",data.notificationData.eventReuqests.get(position-data.notificationData.bandRequests.size()));
                     intent.putExtra("status","event");
+                    intent.putExtra("data",data);
                 }
-
 
                 startActivity(intent);
             }

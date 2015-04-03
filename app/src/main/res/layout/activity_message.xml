@@ -12,7 +12,8 @@
         android:text="Message Activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bandRequest" />
+        android:id="@+id/bandRequestEmpty"
+        android:visibility="invisible"/>
     <ListView
         android:id="@+id/notificationListView"
         android:layout_width="fill_parent"
