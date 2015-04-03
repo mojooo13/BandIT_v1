@@ -17,6 +17,11 @@ public class BandData implements Parcelable {
     String bandName;
     String bandMembers;
     String bandGenre;
+
+    public int getBandID() {
+        return bandID;
+    }
+
     String bandMusik;
     String bandInstruments;
 
@@ -76,6 +81,7 @@ public class BandData implements Parcelable {
 
         JSONObject jsonObject = new JSONObject();
         try {
+            jsonObject.put("command","uploadMusic");
             jsonObject.put("bandID",bandID);
             jsonObject.put("title",title);
         } catch (JSONException e) {

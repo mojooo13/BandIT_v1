@@ -10,19 +10,30 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class BandActivity extends Activity {
+    private MyItemAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +41,11 @@ public class BandActivity extends Activity {
         setContentView(R.layout.activity_band);
 
         final int id = getIntent().getExtras().getInt("id");
-        final BandData bandData = new BandData(id);
-        boolean fromFragment = getIntent().getExtras().getBoolean("fromFragment");
 
+
+        final BandData bandData = new BandData(id);
+        final boolean fromFragment = getIntent().getExtras().getBoolean("fromFragment");
+        System.out.println(bandData.getBandID());
         TextView bandnameBandTextView = (TextView) findViewById(R.id.bandnameBandTextView);
         TextView genreBandTextView = (TextView) findViewById(R.id.genreBandTextView);
         TextView membersBandTextView = (TextView) findViewById(R.id.membersBandTextView);
@@ -42,57 +55,82 @@ public class BandActivity extends Activity {
         genreBandTextView.setText(bandData.getBandGenre());
         membersBandTextView.setText(bandData.getBandMembers());
 
-        Button editBandBandButton = (Button) findViewById(R.id.editBandBandButton);
-        editBandBandButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
-        Button chooseMusicButton = (Button) findViewById(R.id.bandChooseMusic);
-        chooseMusicButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFileChooser();
+        new Thread(new Runnable() {
+            public void run() {
+                Button editBandBandButton = (Button) findViewById(R.id.editBandBandButton);
+                editBandBandButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-            }
-        });
+                    }
+                });
 
-        Button uploadMusicButton = (Button) findViewById(R.id.bandUploadMusic);
-        uploadMusicButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!filePathTextView.getText().equals(null)){
-                    bandData.postMusic(filePathTextView.getText().toString());
+                if(fromFragment){
+                    LinearLayout uploadLayout = (LinearLayout)findViewById(R.id.BandpageMusicUploadLinearLayout);
+                    uploadLayout.setVisibility(View.VISIBLE);
+                    editBandBandButton.setVisibility(View.VISIBLE);
                 }
+                Button chooseMusicButton = (Button) findViewById(R.id.bandChooseMusic);
+                chooseMusicButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showFileChooser();
+
+                    }
+                });
+
+                Button uploadMusicButton = (Button) findViewById(R.id.bandUploadMusic);
+                uploadMusicButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(!filePathTextView.getText().equals(null)){
+                            bandData.postMusic(filePathTextView.getText().toString());
+                        }
+
+                    }
+                });
+
+
+
+                Button editBandButton = (Button) findViewById(R.id.editBandBandButton);
+                editBandBandButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            MediaPlayer player = new MediaPlayer();
+                            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                            player.setDataSource("http://10.3.252.42/musicupload/2_1.mp3");
+                            player.prepare();
+                            player.start();
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+
+                    }
+                });
 
             }
-        });
+        }).start();
 
-        Button editBandButton = (Button) findViewById(R.id.editBandBandButton);
-        editBandBandButton.setOnClickListener(new View.OnClickListener() {
+
+        initListDataTable(id);
+
+        ListView musicListView = (ListView) findViewById(R.id.bandMusicListView);
+        myAdapter = new MyItemAdapter();
+        musicListView.setAdapter(myAdapter);
+
+        musicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                try {
-                    MediaPlayer player = new MediaPlayer();
-                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    player.setDataSource("http://10.3.252.42/musicupload/2_1.mp3");
-                    player.prepare();
-                    player.start();
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listEntry chosenEntry = listDataTable.get(position);
+                String musicEntry = chosenEntry.getMusicEntry();
 
+                System.out.println(musicEntry);
             }
         });
-
-
-        if(fromFragment){
-            LinearLayout uploadLayout = (LinearLayout)findViewById(R.id.BandpageMusicUploadLinearLayout);
-            uploadLayout.setVisibility(View.VISIBLE);
-            editBandBandButton.setVisibility(View.VISIBLE);
-        }
     }
+
 
 
 
@@ -186,6 +224,90 @@ public class BandActivity extends Activity {
 
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+ //-----------------ListView------------------------------------------------------------------
+    private class listEntry{
+        private String musicTitle;
+        private String musicEntry;
+        private int id;
+
+     public String getMusicTitle() {
+         return musicTitle;
+     }
+     public String getMusicEntry() {
+         return musicEntry;
+     }
+
+     private listEntry(String musicTitle, int musicId, int bandId) {
+            this.musicTitle = musicTitle;
+            this.id = id;
+            musicEntry = bandId + "_" + musicId;
+        }
+    }
+
+    private ArrayList<listEntry> listDataTable;
+
+    private void initListDataTable(int bandId) {
+        listDataTable = new ArrayList<listEntry>();
+        ServerCommunication con = new ServerCommunication();
+
+        JSONObject jsonStringObject = new JSONObject();
+        try {
+            jsonStringObject.put("bandId", bandId);
+            jsonStringObject.put("command", "getMusicList");
+
+            String serverAnswer = con.communication(jsonStringObject.toString());
+            String jsonString = serverAnswer.substring(serverAnswer.indexOf("$") + 1);
+
+            jsonStringObject = new JSONObject(jsonString);
+            System.out.println(jsonStringObject.toString());
+
+            if (jsonStringObject.getString("command").equals("getMusicList") && jsonStringObject.getString("status").equals("true")) {
+                JSONArray jsonStringArray = jsonStringObject.getJSONArray("music");
+
+                for (int i = 0; i < jsonStringArray.length(); i++) {
+                    jsonStringObject = jsonStringArray.getJSONObject(i);
+                    listEntry newEntry = new listEntry(jsonStringObject.getString("title"),jsonStringObject.getInt("musicId"),bandId);
+                    listDataTable.add(newEntry);
+                }
+            }
+            else{
+                System.out.println("some kind of error occured");
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    class MyItemAdapter extends BaseAdapter {
+        private final LayoutInflater mInflater;
+        public MyItemAdapter() {
+            mInflater = (LayoutInflater) BandActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+        public int getCount() {
+            return listDataTable.size();
+        }
+        public listEntry getItem(int position) {
+            return listDataTable.get(position);
+        }
+        public long getItemId(int position) {
+            return (long) position;
+        }
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LinearLayout itemView = (LinearLayout) mInflater.inflate(R.layout.musicplaylistitem, parent, false);
+            bindView(itemView, position);
+            return itemView;
+        }
+        private void bindView(LinearLayout view, int position) {
+            listEntry entry = getItem(position);
+            view.setId((int) getItemId(position));
+
+
+            setContentView(R.layout.musicplaylistitem);
+            TextView musicTitleTextView = (TextView) view.findViewById(R.id.musicTitle);
+            musicTitleTextView.setText(entry.getMusicTitle());
+        }
     }
 }
 
