@@ -8,41 +8,56 @@
     android:orientation="vertical"
     android:weightSum="1.0" >
 
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/emptyprofil"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
     <TextView
-        android:text="@string/kein"
+        android:text="First Name"
         android:id="@+id/profileFirstName"
         android:layout_width="wrap_content"
         android:textSize="20dp"
         android:layout_height="wrap_content" />
     <TextView
-        android:text="@string/kein"
+        android:text="Second Name"
         android:textSize="20dp"
         android:id="@+id/profileSecondName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
-        android:text="@string/kein"
+        android:text="Adress"
         android:textSize="20dp"
         android:id="@+id/profileAdress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
-        android:text="@string/kein"
+        android:text="Mobile Number"
         android:textSize="20dp"
         android:id="@+id/profileMobileNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
-        android:text="@string/kein"
+        android:text="Instruments"
         android:textSize="20dp"
         android:id="@+id/profileInstruments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
-        android:text="@string/kein"
+        android:text="Genre"
         android:textSize="20dp"
         android:id="@+id/profileGenre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Invite to Band"
+        android:id="@+id/inviteToBandButton" />
 
 </LinearLayout>

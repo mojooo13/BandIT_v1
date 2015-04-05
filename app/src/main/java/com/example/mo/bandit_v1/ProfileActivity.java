@@ -1,20 +1,29 @@
 package com.example.mo.bandit_v1;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+
+import org.json.JSONObject;
 
 public class ProfileActivity extends Activity {
 
+    int inviteToBandProfilID;
+    int inviteToBandBandID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        int id = getIntent().getExtras().getInt("id");
+        final int id = getIntent().getExtras().getInt("id");
         ProfilData profilData = new ProfilData(id);
+
+        inviteToBandProfilID = id;
 
         TextView firstName = (TextView)findViewById(R.id.profileFirstName);
         TextView secondName = (TextView)findViewById(R.id.profileSecondName);
@@ -29,13 +38,49 @@ public class ProfileActivity extends Activity {
         }
         instrumentString = instrumentString.substring(0,instrumentString.lastIndexOf(","));
 
-        firstName.setText(profilData.getProfilVorname());
-        secondName.setText(profilData.getProfilNachname());
-        adress.setText(profilData.getProfilAdress());
-        instruments.setText(instrumentString);
-        genre.setText(profilData.getProfilGenre());
-        number.setText(profilData.getTelephonNr());
+        firstName.setText("First Name: "+profilData.getProfilVorname());
+        secondName.setText("Second Name: "+profilData.getProfilNachname());
+        adress.setText("Adress: "+profilData.getProfilAdress());
+        instruments.setText("Instruments: "+instrumentString);
+        genre.setText("Genre: "+profilData.getProfilGenre());
+        number.setText("Tel.: "+profilData.getTelephonNr());
 
+        Button inviteToBandButton = (Button) findViewById(R.id.inviteToBandButton);
+        inviteToBandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this,InviteToBandActivity.class);
+                intent.putExtra("profilID",id);
+                startActivityForResult(intent,1);
+            }
+        });
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                int idBand = data.getExtras().getInt("idBand");
+                inviteToBandBandID = idBand;
+
+                JSONObject jsonObject = new JSONObject();
+                try{
+                    jsonObject.put("command","updateBandMember");
+                    jsonObject.put("profileId",inviteToBandProfilID);
+                    jsonObject.put("bandId",inviteToBandBandID);
+                    jsonObject.put("order","add");
+
+                    ServerCommunication serverCommunication = new ServerCommunication();
+                    String answer = serverCommunication.communication(jsonObject.toString());
+                    System.out.println(answer);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+            if (resultCode == RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
     }
 
 

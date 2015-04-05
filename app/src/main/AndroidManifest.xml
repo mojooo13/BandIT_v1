@@ -67,6 +67,10 @@
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile" >
         </activity>
+        <activity
+            android:name=".InviteToBandActivity"
+            android:label="@string/title_activity_invite_to_band" >
+        </activity>
     </application>
 
 </manifest>
