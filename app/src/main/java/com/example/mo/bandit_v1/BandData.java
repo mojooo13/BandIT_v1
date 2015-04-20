@@ -17,6 +17,11 @@ public class BandData implements Parcelable {
     String bandName;
     String bandMembers;
     String bandGenre;
+
+    public int getBandID() {
+        return bandID;
+    }
+
     String bandMusik;
     String bandInstruments;
 
@@ -40,6 +45,7 @@ public class BandData implements Parcelable {
 
             ServerCommunication con = new ServerCommunication();
             String jsonString = con.communication(jsonObject.toString());
+            System.out.println(jsonString);
             jsonString = jsonString.substring(jsonString.indexOf("$")+1);
             jsonObject = new JSONObject(jsonString);
 
@@ -64,8 +70,9 @@ public class BandData implements Parcelable {
 
 
         } catch (JSONException e) {
-            System.out.println("error");
+            System.out.println("Error in BandData Constructor");
             e.printStackTrace();
+            System.out.println("_________________________________________");
         }
 
     }
@@ -76,6 +83,7 @@ public class BandData implements Parcelable {
 
         JSONObject jsonObject = new JSONObject();
         try {
+            jsonObject.put("command","uploadMusic");
             jsonObject.put("bandID",bandID);
             jsonObject.put("title",title);
         } catch (JSONException e) {
