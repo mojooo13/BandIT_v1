@@ -65,7 +65,7 @@ public class EventData implements Parcelable {
 
     }
 
-    public EventData(String eventName,String eventDate,String eventTime,String eventLocation,String eventBand,String eventGenre){
+    public EventData(String eventName,String eventDate,String eventTime,String eventLocation,String eventGenre){
         this.eventName = eventName;
         this.eventTime = eventTime;
         this.eventDate = eventDate;

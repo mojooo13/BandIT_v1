@@ -75,8 +75,9 @@ public class BandFragment extends Fragment {
 
                 intent.putExtra("id",idBand);
 
-                //intent.putExtra("bandID",idBand);
+                intent.putExtra("data",data);
                 intent.putExtra("fromFragment",true);
+
 
                 startActivity(intent);
             }

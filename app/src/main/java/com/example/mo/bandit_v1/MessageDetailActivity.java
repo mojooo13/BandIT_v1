@@ -21,7 +21,7 @@ public class MessageDetailActivity extends Activity {
 
 
         final BandRequest bandRequest;
-        EventReuqest eventReuqest;
+        final EventReuqest eventReuqest;
 
 
 
@@ -142,13 +142,39 @@ public class MessageDetailActivity extends Activity {
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ServerCommunication serverCommunication = new ServerCommunication();
+                    JSONObject jsonObject= new JSONObject();
+                    try {
+                        jsonObject.put("command","updateEventRequest");
+                        jsonObject.put("order","add");
+                        jsonObject.put("requestId",eventReuqest.requestID);
 
+                        System.out.println(jsonObject.toString());
+                        String jsonString = serverCommunication.communication(jsonObject.toString());
+                        System.out.println("Antwort: "+jsonString);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    finish();
                 }
             });
             declineButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ServerCommunication serverCommunication = new ServerCommunication();
+                    JSONObject jsonObject= new JSONObject();
+                    try {
+                        jsonObject.put("command","updateEventRequest");
+                        jsonObject.put("order","decline");
+                        jsonObject.put("requestId",eventReuqest.requestID);
 
+                        System.out.println(jsonObject.toString());
+                        String jsonString = serverCommunication.communication(jsonObject.toString());
+                        System.out.println("Antwort: "+jsonString);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    finish();
                 }
             });
         }

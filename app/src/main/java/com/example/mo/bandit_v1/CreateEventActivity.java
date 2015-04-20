@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class CreateEventActivity extends Activity {
 
@@ -22,7 +25,9 @@ public class CreateEventActivity extends Activity {
         setContentView(R.layout.activity_create_event);
 
 
+        Intent intent = getIntent();
 
+        final Data data = intent.getParcelableExtra("data");
 
 
         contactImageView = (ImageView) findViewById(R.id.emptyBandCreateEventImageView);
@@ -45,26 +50,41 @@ public class CreateEventActivity extends Activity {
                 EditText newDateCreateEventEditDate = (EditText) findViewById(R.id.newDateCreateEventEditDate);
                 EditText newTimeCreateEventEditTime = (EditText) findViewById(R.id.newTimeCreateEventEditTime);
                 EditText newEventLocationCreateEventEditText = (EditText) findViewById(R.id.newEventLocationCreateEventEditText);
-                EditText newBandNameCreateEventEditText = (EditText) findViewById(R.id.newBandNameCreateEventEditText);
                 EditText newGenresCreateEventEditText = (EditText) findViewById(R.id.newGenresCreateEventEditText);
 
                 String newEventnameCreateEventString;
                 String newDateCreateEventString;
                 String newTimeCreateEventString;
                 String newEventLocationCreateEventString;
-                String newBandNameCreateEventString;
                 String newGenresCreateEventString;
 
-                newEventnameCreateEventString = newDateCreateEventEditDate.getText().toString();
-                newDateCreateEventString = newEventnameCreateEventEditText.getText().toString();
+                newEventnameCreateEventString = newEventnameCreateEventEditText.getText().toString();
+                newDateCreateEventString = newDateCreateEventEditDate.getText().toString();
                 newTimeCreateEventString = newTimeCreateEventEditTime.getText().toString();
                 newEventLocationCreateEventString = newEventLocationCreateEventEditText.getText().toString();
-                newBandNameCreateEventString = newBandNameCreateEventEditText.getText().toString();
                 newGenresCreateEventString = newGenresCreateEventEditText.getText().toString();
 
                 EventData eventData = new EventData(newEventnameCreateEventString,newDateCreateEventString,newTimeCreateEventString,
-                        newEventLocationCreateEventString,newBandNameCreateEventString,newGenresCreateEventString);
+                        newEventLocationCreateEventString,newGenresCreateEventString);
 
+
+                ServerCommunication serverCommunication = new ServerCommunication();
+                JSONObject jsonObject= new JSONObject();
+                try {
+                    jsonObject.put("command","createEvent");
+                    jsonObject.put("eventName",eventData.eventName);
+                    jsonObject.put("eventDate",eventData.eventDate);
+                    jsonObject.put("eventTime",eventData.eventTime);
+                    jsonObject.put("eventLocation",eventData.eventLocation);
+                    jsonObject.put("eventGenre",eventData.eventGenre);
+                    jsonObject.put("profileId",data.profilData.profilID);
+
+                    System.out.println(jsonObject.toString());
+                    String jsonString = serverCommunication.communication(jsonObject.toString());
+                    System.out.println("Antwort: "+jsonString);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
               finish();
             }
         });

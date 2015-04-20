@@ -32,7 +32,7 @@ public class EventFragment extends Fragment {
         View view = inflater.inflate(R.layout.event, container, false);
 
         Intent intent = getActivity().getIntent();
-        Data data = intent.getParcelableExtra("data");
+        final Data data = intent.getParcelableExtra("data");
         ArrayList<EventData> eventDatas = data.eventDatas;
 
         EventData[] eventData = eventDatas.toArray(new EventData[eventDatas.size()]);
@@ -64,7 +64,9 @@ public class EventFragment extends Fragment {
         createEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),CreateEventActivity.class));
+                Intent intent = new Intent(getActivity(),CreateEventActivity.class);
+                intent.putExtra("data",data);
+                startActivity(intent);
             }
         });
 

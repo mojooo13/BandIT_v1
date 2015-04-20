@@ -59,12 +59,16 @@ public class Data implements Parcelable {//Klassen ins Intent
                 bandDatas.add(bandData);
             }
 
-            JSONArray jsonArray2 = jsonObject3.getJSONArray("events");
-            eventDatas = new ArrayList<EventData>();
-            for(int i=0;i< jsonArray2.length();i++){
-                JSONObject jsonObject = jsonArray2.getJSONObject(i);
-                EventData eventData = new EventData(jsonObject.getInt("eventID"),jsonObject.getString("eventName"),jsonObject.getString("eventGenre"));
-                eventDatas.add(eventData);
+            try {
+                JSONArray jsonArray2 = jsonObject3.getJSONArray("events");
+                eventDatas = new ArrayList<EventData>();
+                for (int i = 0; i < jsonArray2.length(); i++) {
+                    JSONObject jsonObject = jsonArray2.getJSONObject(i);
+                    EventData eventData = new EventData(jsonObject.getInt("eventID"), jsonObject.getString("eventName"), jsonObject.getString("eventGenre"));
+                    eventDatas.add(eventData);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
 
 

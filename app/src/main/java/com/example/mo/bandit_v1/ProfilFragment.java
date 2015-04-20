@@ -48,11 +48,13 @@ public class ProfilFragment extends Fragment{
         TextView adressProfilTextView = (TextView) view.findViewById(R.id.adressProfilText);
         TextView instrumentProfilTextView = (TextView) view.findViewById(R.id.instrumetProfilTextView);
         TextView genreProfilTextView = (TextView) view.findViewById(R.id.genreProfilTextView);
+        TextView telNrProfilTextView = (TextView) view.findViewById(R.id.telNrProfilTextView);
 
         vornameProfilTextView.setText(profilData.getProfilVorname().toString());
         nachnameProfilTextView.setText(profilData.getProfilNachname().toString());
-        emailProfilTextView.setText(profilData.getProfilEmail().toString());
+        emailProfilTextView.setText("Email: "+profilData.getProfilEmail().toString());
         adressProfilTextView.setText(profilData.getProfilAdress().toString());
+        telNrProfilTextView.setText("Tel.: "+profilData.getTelephonNr().toString());
 
 
         String instrumentText = "Instruments:";

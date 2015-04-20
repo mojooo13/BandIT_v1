@@ -58,15 +58,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <EditText
-        android:hint="Band Names"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/newBandNameCreateEventEditText"
-        android:layout_below="@+id/newBandCreateEventSearchView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
     <TextView
         android:textSize="25dp"
         android:layout_width="wrap_content"
@@ -82,16 +73,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newGenresCreateEventEditText"
-        android:layout_below="@+id/newBandNameCreateEventEditText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <SearchView
-
-        android:queryHint="Search Band"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/newBandCreateEventSearchView"
         android:layout_below="@+id/bandRequest"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -115,6 +96,7 @@
         android:layout_toStartOf="@+id/saveCreateEventButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/emptyBandCreateEventImageView" />
+        android:id="@+id/emptyBandCreateEventImageView"
+        android:layout_below="@+id/newGenresCreateEventEditText" />
 
 </RelativeLayout>

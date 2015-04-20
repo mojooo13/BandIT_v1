@@ -40,11 +40,12 @@ public class BandActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_band);
 
-        final int id = getIntent().getExtras().getInt("id");
+        final int bandID = getIntent().getExtras().getInt("id");
+        final Data data = getIntent().getParcelableExtra("data");
 
-        final BandData bandData = new BandData(id);
+        final BandData bandData = new BandData(bandID);
         final boolean fromFragment = getIntent().getExtras().getBoolean("fromFragment");
-        initListDataTable(id);
+        initListDataTable(bandID);
 
         System.out.println(bandData.getBandID());
         TextView bandnameBandTextView = (TextView) findViewById(R.id.bandnameBandTextView);
@@ -98,6 +99,40 @@ public class BandActivity extends Activity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        Button leaveBandButton = (Button) findViewById(R.id.leaveBandBandButton);
+        leaveBandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ServerCommunication serverCommunication = new ServerCommunication();
+                JSONObject jsonObject= new JSONObject();
+                try {
+                    jsonObject.put("command","updateBandMember");
+                    jsonObject.put("bandId",bandData.bandID);
+                    jsonObject.put("profileId",data.profilData.profilID);
+                    jsonObject.put("order","delete");
+
+                    System.out.println(jsonObject.toString());
+                    String jsonString = serverCommunication.communication(jsonObject.toString());
+                    System.out.println("Antwort: "+jsonString);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                finish();
+            }
+        });
+
+        Button inviteBandToEventButton = (Button) findViewById(R.id.inviteBandToEventBandButton);
+        inviteBandToEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BandActivity.this,InviteToEventActivity.class);
+                intent.putExtra("data",data);
+                intent.putExtra("bandID",bandID);
+
+                startActivity(intent);
             }
         });
 
