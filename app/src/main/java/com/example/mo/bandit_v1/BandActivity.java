@@ -44,11 +44,17 @@ public class BandActivity extends Activity {
 
         final BandData bandData = new BandData(id);
         final boolean fromFragment = getIntent().getExtras().getBoolean("fromFragment");
+        initListDataTable(id);
+
         System.out.println(bandData.getBandID());
         TextView bandnameBandTextView = (TextView) findViewById(R.id.bandnameBandTextView);
         TextView genreBandTextView = (TextView) findViewById(R.id.genreBandTextView);
         TextView membersBandTextView = (TextView) findViewById(R.id.membersBandTextView);
         final TextView filePathTextView = (TextView)findViewById(R.id.uploadFilePathTextView);
+        ListView musicListView = (ListView) findViewById(R.id.bandMusicListView);
+
+        myAdapter = new MyItemAdapter();
+        musicListView.setAdapter(myAdapter);
 
         bandnameBandTextView.setText(bandData.getBandName());
         genreBandTextView.setText(bandData.getBandGenre());
@@ -62,7 +68,7 @@ public class BandActivity extends Activity {
             }
         });
 
-        if(fromFragment){
+       if(fromFragment){
             LinearLayout uploadLayout = (LinearLayout)findViewById(R.id.BandpageMusicUploadLinearLayout);
             uploadLayout.setVisibility(View.VISIBLE);
             editBandBandButton.setVisibility(View.VISIBLE);
@@ -91,23 +97,9 @@ public class BandActivity extends Activity {
         editBandBandButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    MediaPlayer player = new MediaPlayer();
-                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    player.setDataSource("http://10.3.252.42/musicupload/2_1.mp3");
-                    player.prepare();
-                    player.start();
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
+
             }
         });
-
-        initListDataTable(id);
-
-        ListView musicListView = (ListView) findViewById(R.id.bandMusicListView);
-        myAdapter = new MyItemAdapter();
-        musicListView.setAdapter(myAdapter);
 
         musicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -115,7 +107,15 @@ public class BandActivity extends Activity {
                 listEntry chosenEntry = listDataTable.get(position);
                 String musicEntry = chosenEntry.getMusicEntry();
 
-                System.out.println(musicEntry);
+                try {
+                    MediaPlayer player = new MediaPlayer();
+                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    player.setDataSource("http://10.3.252.42/musicupload/"+musicEntry);
+                    player.prepare();
+                    player.start();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
             }
         });
     }
@@ -225,7 +225,6 @@ public class BandActivity extends Activity {
 
      private listEntry(String musicTitle, int musicId, int bandId) {
             this.musicTitle = musicTitle;
-            this.id = id;
             musicEntry = bandId + "_" + musicId;
         }
     }
@@ -288,8 +287,6 @@ public class BandActivity extends Activity {
             listEntry entry = getItem(position);
             view.setId((int) getItemId(position));
 
-
-            setContentView(R.layout.musicplaylistitem);
             TextView musicTitleTextView = (TextView) view.findViewById(R.id.musicTitle);
             musicTitleTextView.setText(entry.getMusicTitle());
         }

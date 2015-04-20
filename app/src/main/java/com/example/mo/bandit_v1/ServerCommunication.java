@@ -31,7 +31,7 @@ import java.net.URLEncoder;
 public class ServerCommunication {
 
     private static Context context;
-    String serverip = "http://192.168.1.15";
+    String serverip = "http://10.0.0.21";
 
     public String communication (String json){
         //context = c;
