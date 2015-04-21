@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -143,14 +142,15 @@ public class BandActivity extends Activity {
                 String musicEntry = chosenEntry.getMusicEntry();
 
                 try {
-                    MediaPlayer player = new MediaPlayer();
-                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    player.setDataSource("http://10.3.252.42/musicupload/"+musicEntry);
-                    player.prepare();
-                    player.start();
+                    MediaPlayer mp = new MediaPlayer();
+                    mp.setDataSource("http://10.150.1.96/musicupload/"+musicEntry);
+                    mp.prepare();
+                    mp.start();
+
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
+
             }
         });
     }
@@ -245,6 +245,8 @@ public class BandActivity extends Activity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
  //-----------------ListView------------------------------------------------------------------
     private class listEntry{
         private String musicTitle;
