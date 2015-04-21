@@ -39,6 +39,8 @@ public class BandActivity extends Activity {
     int inviteToEventBandID;
     int inviteToEventProfilID;
 
+    MediaPlayer mp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,14 +164,18 @@ public class BandActivity extends Activity {
                 String musicEntry = chosenEntry.getMusicEntry();
 
                 try {
-                    MediaPlayer player = new MediaPlayer();
-                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    player.setDataSource("http://10.3.252.42/musicupload/"+musicEntry);
-                    player.prepare();
-                    player.start();
+                    mp = new MediaPlayer();
+                    mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    System.out.println("http://10.3.252.62/musicupload/"+musicEntry);
+                    mp.setDataSource("http://10.3.252.62/musicupload/"+musicEntry);
+                    mp.prepare();
+                    mp.start();
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
             }
         });
     }
@@ -294,6 +300,8 @@ public class BandActivity extends Activity {
 
         super.onActivityResult(requestCode, resultCode, intent);
     }
+
+
  //-----------------ListView------------------------------------------------------------------
     private class listEntry{
         private String musicTitle;
@@ -309,7 +317,7 @@ public class BandActivity extends Activity {
 
      private listEntry(String musicTitle, int musicId, int bandId) {
             this.musicTitle = musicTitle;
-            musicEntry = bandId + "_" + musicId;
+            musicEntry = bandId + "_" + musicId+".mp3";
         }
     }
 
