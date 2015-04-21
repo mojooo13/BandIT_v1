@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,7 +34,7 @@ import java.util.List;
 
 public class BandActivity extends Activity {
     private MyItemAdapter myAdapter;
-
+    MediaPlayer mp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,10 +143,13 @@ public class BandActivity extends Activity {
                 String musicEntry = chosenEntry.getMusicEntry();
 
                 try {
-                    MediaPlayer mp = new MediaPlayer();
-                    mp.setDataSource("http://10.150.1.96/musicupload/"+musicEntry);
+                    mp = new MediaPlayer();
+                    mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    System.out.println("http://10.3.252.62/musicupload/"+musicEntry);
+                    mp.setDataSource("http://10.3.252.62/musicupload/"+musicEntry);
                     mp.prepare();
                     mp.start();
+
 
                 } catch (Exception e) {
                     // TODO: handle exception
@@ -262,7 +266,7 @@ public class BandActivity extends Activity {
 
      private listEntry(String musicTitle, int musicId, int bandId) {
             this.musicTitle = musicTitle;
-            musicEntry = bandId + "_" + musicId;
+            musicEntry = bandId + "_" + musicId+".mp3";
         }
     }
 

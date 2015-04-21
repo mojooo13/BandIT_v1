@@ -32,7 +32,7 @@ public class ServerCommunication {
 
     private static Context context;
 
-    String serverip = "http://10.150.1.96";
+    String serverip = "http://10.3.252.62";
 
     //String serverip = "http://10.0.0.21";
 
