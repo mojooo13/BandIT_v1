@@ -57,6 +57,7 @@
         android:text="Close BandIT"
         android:id="@+id/closeBandITButton"
         android:layout_below="@+id/signUpLogInButton"
+        android:layout_marginTop="25dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
