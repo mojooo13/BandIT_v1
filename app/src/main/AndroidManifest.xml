@@ -5,7 +5,9 @@
     <permission android:name="android.permission.INTERNET" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <permission android:name="android.permission.WAKE_LOCK"/>
+
+    <permission android:name="android.permission.WAKE_LOCK" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -81,6 +83,10 @@
         <activity
             android:name=".InviteToEventActivity"
             android:label="@string/title_activity_invite_to_event" >
+        </activity>
+        <activity
+            android:name=".PlayMusic"
+            android:label="@string/title_activity_play_music" >
         </activity>
     </application>
 

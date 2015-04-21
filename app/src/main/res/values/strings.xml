@@ -20,5 +20,6 @@
     <string name="toggleStrimg">New ToggleButton</string>
     <string name="title_activity_invite_to_band">InviteToBandActivity</string>
     <string name="title_activity_invite_to_event">InviteToEventActivity</string>
+    <string name="title_activity_play_music">Play Music</string>
 
 </resources>
