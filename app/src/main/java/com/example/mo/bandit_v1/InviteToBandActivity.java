@@ -35,6 +35,7 @@ public class InviteToBandActivity extends Activity {
         setContentView(R.layout.activity_invite_to_band);
 
         Intent intent = getIntent();
+        final Data data = intent.getParcelableExtra("data");
         int profilID = intent.getExtras().getInt("profilID");
         JSONObject  jsonObject = new JSONObject();
         try{
@@ -72,7 +73,19 @@ public class InviteToBandActivity extends Activity {
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("idBand",idBand);
                     setResult(RESULT_OK,returnIntent);
-                    finish();
+                    //finish();
+                    String email = data.profilData.profilEmail;
+                    String passwort = data.profilData.passwort;
+                    LoginData loginData = new LoginData(email,passwort);
+                    if(loginData.login().equals("true")){
+                        Data dataUpdate = new Data(loginData.line1, loginData.line2, loginData.line3, loginData.line4);
+
+                        //finish();
+                        Intent intent = new Intent(InviteToBandActivity.this,MainMenuActivity.class);
+                        intent.putExtra("data",dataUpdate);
+                        intent.putExtra("profilID",5);
+                        startActivity(intent);
+                    }
 
                 }
             });

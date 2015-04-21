@@ -35,6 +35,10 @@ import java.util.List;
 public class BandActivity extends Activity {
     private MyItemAdapter myAdapter;
 
+    int inviteToEventEventID;
+    int inviteToEventBandID;
+    int inviteToEventProfilID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,9 @@ public class BandActivity extends Activity {
 
         final int bandID = getIntent().getExtras().getInt("id");
         final Data data = getIntent().getParcelableExtra("data");
+
+        inviteToEventProfilID = data.profilData.profilID;
+        inviteToEventBandID = bandID;
 
         final BandData bandData = new BandData(bandID);
         final boolean fromFragment = getIntent().getExtras().getBoolean("fromFragment");
@@ -120,7 +127,19 @@ public class BandActivity extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                finish();
+                //finish();
+                String email = data.profilData.profilEmail;
+                String passwort = data.profilData.passwort;
+                LoginData loginData = new LoginData(email,passwort);
+                if(loginData.login().equals("true")){
+                    Data dataUpdate = new Data(loginData.line1, loginData.line2, loginData.line3, loginData.line4);
+
+                    //finish();
+                    Intent intent = new Intent(BandActivity.this,MainMenuActivity.class);
+                    intent.putExtra("data",dataUpdate);
+                    intent.putExtra("profilID",5);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -132,7 +151,7 @@ public class BandActivity extends Activity {
                 intent.putExtra("data",data);
                 intent.putExtra("bandID",bandID);
 
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
 
@@ -149,7 +168,7 @@ public class BandActivity extends Activity {
                     player.prepare();
                     player.start();
                 } catch (Exception e) {
-                    // TODO: handle exception
+                    e.printStackTrace();
                 }
             }
         });
@@ -211,12 +230,42 @@ public class BandActivity extends Activity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                Data data = intent.getParcelableExtra("data");
+                int idEvent = intent.getExtras().getInt("idEvent");
+                inviteToEventEventID = idEvent;
+                String date = intent.getExtras().getString("date");
+
+                JSONObject jsonObject = new JSONObject();
+                try{
+                    jsonObject.put("command","addBandToEventRequest");
+                    jsonObject.put("profileId",inviteToEventProfilID);
+                    jsonObject.put("bandId",inviteToEventBandID);
+                    jsonObject.put("eventId",inviteToEventEventID);
+                    jsonObject.put("text",data.profilData.profilVorname+data.profilData.profilNachname+" would like to add you to his event.");
+                    //jsonObject.put("date",date);
+
+                    ServerCommunication serverCommunication = new ServerCommunication();
+                    String answer = serverCommunication.communication(jsonObject.toString());
+                    System.out.println(answer);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+            if (resultCode == RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
+
         switch (requestCode) {
             case FILE_SELECT_CODE:
                 if (resultCode == RESULT_OK) {
                     // Get the Uri of the selected file
-                    Uri uri = data.getData();
+                    Uri uri = intent.getData();
                     Log.d("TAG", "File Uri: " + uri.toString());
                     // Get the path
                     String path = "no path";
@@ -243,7 +292,7 @@ public class BandActivity extends Activity {
         }
 
 
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, intent);
     }
  //-----------------ListView------------------------------------------------------------------
     private class listEntry{

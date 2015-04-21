@@ -20,6 +20,7 @@
         android:weightSum="1.0" >
 
         <EditText
+            android:inputType="textCapSentences"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".40"
@@ -27,6 +28,7 @@
             android:id="@+id/searchName" />
 
         <EditText
+            android:inputType="textCapSentences"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".60"

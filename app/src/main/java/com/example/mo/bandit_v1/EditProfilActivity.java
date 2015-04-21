@@ -32,6 +32,8 @@ public class EditProfilActivity extends Activity {
 
         final Intent intent = getIntent();
 
+        final Data data = intent.getParcelableExtra("data");
+
         vornameEditTextTextView.setText("First name: "+intent.getStringExtra("vorname"));
         nachnameEditTextTextView.setText("Second name: "+intent.getStringExtra("nachname"));
         adresseEditTextTextView.setText("Adress: "+intent.getStringExtra("adress"));
@@ -125,7 +127,19 @@ public class EditProfilActivity extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                finish();
+                //finish();
+                String email = data.profilData.profilEmail;
+                String passwort = data.profilData.passwort;
+                LoginData loginData = new LoginData(email,passwort);
+                if(loginData.login().equals("true")){
+                    Data dataUpdate = new Data(loginData.line1, loginData.line2, loginData.line3, loginData.line4);
+
+                    //finish();
+                    Intent intent = new Intent(EditProfilActivity.this,MainMenuActivity.class);
+                    intent.putExtra("data",dataUpdate);
+                    intent.putExtra("profilID",5);
+                    startActivity(intent);
+                }
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.example.mo.bandit_v1;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,8 @@ public class EditBandActivity extends Activity {
 
         int idBand = getIntent().getIntExtra("idBand",0);
         final BandData bandData = new BandData(idBand);
+
+        final Data data = getIntent().getParcelableExtra("data");
 
         TextView newBandnameEditBandTextView = (TextView) findViewById(R.id.newBandnameEditBandTextView);
         TextView newMemberEditBandTextView = (TextView) findViewById(R.id.newMemberEditBandTextView);
@@ -61,7 +64,18 @@ public class EditBandActivity extends Activity {
                 bandData.setBandMusik(newMusikEditBandString);
                 bandData.setBandInstruments(newInstrumentEditBandString);
 
-                finish();
+                String email = data.profilData.profilEmail;
+                String passwort = data.profilData.passwort;
+                LoginData loginData = new LoginData(email,passwort);
+                if(loginData.login().equals("true")){
+                    Data dataUpdate = new Data(loginData.line1, loginData.line2, loginData.line3, loginData.line4);
+
+                    //finish();
+                    Intent intent = new Intent(EditBandActivity.this,MainMenuActivity.class);
+                    intent.putExtra("data",dataUpdate);
+                    intent.putExtra("profilID",5);
+                    startActivity(intent);
+                }
             }
         });
 

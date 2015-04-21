@@ -22,6 +22,7 @@ public class ProfileActivity extends Activity {
 
         final int id = getIntent().getExtras().getInt("id");
         ProfilData profilData = new ProfilData(id);
+        final Data data = getIntent().getParcelableExtra("data");
 
         inviteToBandProfilID = id;
 
@@ -50,7 +51,8 @@ public class ProfileActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this,InviteToBandActivity.class);
-                intent.putExtra("profilID",id);
+                intent.putExtra("profilID",data.profilData.profilID);
+                intent.putExtra("data",data);
                 startActivityForResult(intent,1);
             }
         });

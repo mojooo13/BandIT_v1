@@ -89,7 +89,7 @@ public class BandFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),CreateBandActivity.class);
                 intent.putExtra("data",data);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
 
@@ -145,7 +145,7 @@ public class BandFragment extends Fragment {
             nameTextView.setText(datensatz.name);
         }
     }
-    public void onActivityResult(int reqCode, int resCode, Intent data){
+    public void onActivityResult(int reqCode, int resCode, Intent intent){
         if(resCode == Activity.RESULT_OK){
             if (reqCode == 1){
 

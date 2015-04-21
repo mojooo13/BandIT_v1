@@ -9,6 +9,7 @@
     tools:context="com.example.mo.bandit_v1.CreateBandActivity">
 
     <EditText
+        android:inputType="textCapSentences"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="Bandname"
@@ -25,6 +26,7 @@
         android:layout_alignParentEnd="true" />
 
     <EditText
+        android:inputType="textCapSentences"
         android:hint="Genre"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

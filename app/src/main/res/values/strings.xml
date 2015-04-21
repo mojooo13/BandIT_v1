@@ -19,5 +19,6 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="toggleStrimg">New ToggleButton</string>
     <string name="title_activity_invite_to_band">InviteToBandActivity</string>
+    <string name="title_activity_invite_to_event">InviteToEventActivity</string>
 
 </resources>

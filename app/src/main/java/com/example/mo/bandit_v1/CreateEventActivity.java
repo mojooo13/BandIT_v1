@@ -85,7 +85,19 @@ public class CreateEventActivity extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-              finish();
+              //finish();
+                String email = data.profilData.profilEmail;
+                String passwort = data.profilData.passwort;
+                LoginData loginData = new LoginData(email,passwort);
+                if(loginData.login().equals("true")){
+                    Data dataUpdated = new Data(loginData.line1, loginData.line2, loginData.line3, loginData.line4);
+
+                    //finish();
+                    Intent intent = new Intent(CreateEventActivity.this,MainMenuActivity.class);
+                    intent.putExtra("data",dataUpdated);
+                    intent.putExtra("profilID",5);
+                    startActivity(intent);
+                }
             }
         });
     }

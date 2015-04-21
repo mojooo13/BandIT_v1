@@ -61,11 +61,16 @@ public class MainMenuActivity extends Activity {
             return true;
         }
         if(id == R.id.action_logout){
-            finish();
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("EXIT", true);
+            startActivity(intent);
+            //finish();
         }
         if(id == R.id.action_search){
             Intent intent = new Intent(MainMenuActivity.this,SearchActivity.class);
             intent.putExtra("profilID",profilID);
+            intent.putExtra("data",data);
             startActivity(intent);
         }
         if(id == R.id.action_message){

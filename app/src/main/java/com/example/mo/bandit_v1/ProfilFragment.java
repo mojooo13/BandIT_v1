@@ -38,7 +38,7 @@ public class ProfilFragment extends Fragment{
         //int profilID = getActivity().getIntent().getExtras().getInt("profilID");
         //final ProfilData profilData = new ProfilData(profilID);
         Intent intent = getActivity().getIntent();
-        Data data = intent.getParcelableExtra("data");
+        final Data data = intent.getParcelableExtra("data");
         final ProfilData profilData = data.profilData;
         //final ProfilData profilData = new ProfilData("Moritz", "Hauch" , "moritz.hauch1@gmx.net", "Rupert Gugg Str 4", "Gitarre", "Hard Rock");
 
@@ -78,6 +78,7 @@ public class ProfilFragment extends Fragment{
                 intent.putExtra("adress",profilData.getProfilAdress().toString());
                 intent.putExtra("instrument",profilData.getInstrumentString());
                 intent.putExtra("genre",profilData.getProfilGenre().toString());
+                intent.putExtra("data",data);
                 startActivity(intent);
             }
         });

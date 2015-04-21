@@ -35,6 +35,7 @@ public class SearchActivity extends Activity {
         setContentView(R.layout.searchlistitem);
         super.onCreate(savedInstanceState);
 
+        final Data data = getIntent().getParcelableExtra("data");
 
         Bundle extras = getIntent().getExtras();
 
@@ -48,28 +49,28 @@ public class SearchActivity extends Activity {
         searchProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new newSearchActivity("profile");
+                new newSearchActivity("profile",data);
             }
         });
         Button searchBandButton = (Button) findViewById(R.id.searchBandButton);
         searchBandButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new newSearchActivity("band");
+                new newSearchActivity("band",data);
             }
         });
         Button searchEventButton = (Button) findViewById(R.id.searchEventButton);
         searchEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new newSearchActivity("event");
+                new newSearchActivity("event",data);
             }
         });
         Button searchMusicButton = (Button) findViewById(R.id.searchMusicButton);
         searchMusicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new newSearchActivity("music");
+                new newSearchActivity("music",data);
             }
         });
 
@@ -103,17 +104,20 @@ public class SearchActivity extends Activity {
                         if(searchType.equals("profile")){
                                 Intent intent = new Intent(SearchActivity.this,ProfileActivity.class);
                                 intent.putExtra("id",intentId);
+                                intent.putExtra("data",data);
                                 startActivity(intent);
                         }
                         if(searchType.equals("band")){
                             Intent intent = new Intent(SearchActivity.this,BandActivity.class);
                             intent.putExtra("id",intentId);
                             intent.putExtra("fromFragment",false);
+                            intent.putExtra("data",data);
                             startActivity(intent);
                         }
                         if(searchType.equals("event")){
                             Intent intent = new Intent(SearchActivity.this,EventActivity.class);
                             intent.putExtra("id",intentId);
+                            intent.putExtra("data",data);
                             startActivity(intent);
                         }
                     }
@@ -222,7 +226,7 @@ public class SearchActivity extends Activity {
         String searchName = "";
         String searchGenre = "";
 
-        newSearchActivity(String searchCondition){
+        newSearchActivity(String searchCondition,Data data){
             EditText searchNameEditText = (EditText) findViewById(R.id.searchName);
             EditText searchGenreEditText = (EditText) findViewById(R.id.searchGenre);
 
@@ -232,6 +236,7 @@ public class SearchActivity extends Activity {
             nextIntent.putExtra("searchType",searchCondition);
             nextIntent.putExtra("searchName",searchName);
             nextIntent.putExtra("searchGenre",searchGenre);
+            nextIntent.putExtra("data",data);
 
             startActivity(nextIntent);
 

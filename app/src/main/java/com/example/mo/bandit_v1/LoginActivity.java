@@ -18,12 +18,24 @@ public class LoginActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            //finish();
+        }
+
 
         Button signUpButton = (Button) findViewById(R.id.signUpLogInButton);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this,SignUpActivity.class));
+            }
+        });
+
+        Button closeBandITButton = (Button) findViewById(R.id.closeBandITButton);
+        closeBandITButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
