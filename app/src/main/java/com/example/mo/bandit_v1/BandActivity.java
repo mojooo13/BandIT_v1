@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,7 +37,7 @@ public class BandActivity extends Activity {
     int inviteToEventBandID;
     int inviteToEventProfilID;
 
-    MediaPlayer mp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +72,9 @@ public class BandActivity extends Activity {
         editBandBandButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("hi");
+                Intent editBandActivity = new Intent(BandActivity.this,EditBandActivity.class);
+                startActivity(editBandActivity);
 
             }
         });
@@ -96,20 +97,21 @@ public class BandActivity extends Activity {
         uploadMusicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!filePathTextView.getText().equals(null)){
+                String m = "";
+                m=filePathTextView.getText().toString();
+
+                if(!filePathTextView.getText().equals("")){
                     bandData.postMusic(filePathTextView.getText().toString());
+                }
+                else{
+                    filePathTextView.setText("Please Add a File");
+                    m="";
                 }
 
             }
         });
 
-        Button editBandButton = (Button) findViewById(R.id.editBandBandButton);
-        editBandBandButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
 
         Button leaveBandButton = (Button) findViewById(R.id.leaveBandBandButton);
         leaveBandButton.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +155,7 @@ public class BandActivity extends Activity {
                 intent.putExtra("data",data);
                 intent.putExtra("bandID",bandID);
 
-                startActivityForResult(intent,1);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -163,18 +165,10 @@ public class BandActivity extends Activity {
                 listEntry chosenEntry = listDataTable.get(position);
                 String musicEntry = chosenEntry.getMusicEntry();
 
-                try {
-                    mp = new MediaPlayer();
-                    mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    System.out.println("http://10.3.252.62/musicupload/"+musicEntry);
-                    mp.setDataSource("http://10.3.252.62/musicupload/"+musicEntry);
-                    mp.prepare();
-                    mp.start();
+                Intent playMusicActivity = new Intent(BandActivity.this,PlayMusic.class);
+                playMusicActivity.putExtra("adress","http://192.168.88.21/musicupload/" + musicEntry);
+                startActivity(playMusicActivity);
 
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
             }
         });

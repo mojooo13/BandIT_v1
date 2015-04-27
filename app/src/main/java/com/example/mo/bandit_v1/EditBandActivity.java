@@ -18,8 +18,8 @@ public class EditBandActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_band);
 
-        int idBand = getIntent().getIntExtra("idBand",0);
-        final BandData bandData = new BandData(idBand);
+        int bandId = getIntent().getExtras().getInt("BandID");
+        final BandData bandData = new BandData(bandId);
 
         final Data data = getIntent().getParcelableExtra("data");
 
@@ -28,6 +28,8 @@ public class EditBandActivity extends Activity {
         TextView newGenreEditBandTextView = (TextView) findViewById(R.id.newGenreEditBandTextView);
         TextView newMusikEditBandTextView = (TextView) findViewById(R.id.newMusikEditBandTextView);
         TextView newInstrumentsEditBandTextView = (TextView) findViewById(R.id.newInstrumentsEditBandTextView);
+        System.out.println(bandData.bandName);;
+        System.out.println(bandData.bandMembers);
         newBandnameEditBandTextView.setText(bandData.getBandName());
         newMemberEditBandTextView.setText(bandData.getBandMembers());
         newGenreEditBandTextView.setText(bandData.getBandGenre());

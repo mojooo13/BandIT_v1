@@ -29,7 +29,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:hint="Vorname"/>
+        android:hint="First Name"/>
 
     <EditText
     android:layout_width="fill_parent"
@@ -37,7 +37,7 @@
         android:layout_below="@+id/passwort1SignUpEditText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="Passwert wiederholen"
+        android:hint="Repeat Password"
         android:id="@+id/passwort2SignUpEditText"
         android:password="true"/>
 
@@ -48,7 +48,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/passwort1SignUpEditText"
-        android:hint="Passwort"
+        android:hint="Password"
         android:password="true"/>
 
     <EditText
@@ -68,7 +68,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/nachnameSignUpEditText"
-        android:hint="Nachname"/>
+        android:hint="Second Name"/>
 
     <Button
         android:layout_width="wrap_content"
