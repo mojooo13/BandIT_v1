@@ -72,6 +72,9 @@ public class BandActivity extends Activity {
         editBandBandButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("hi");
+                Intent editBandActivity = new Intent(BandActivity.this,EditBandActivity.class);
+                startActivity(editBandActivity);
 
             }
         });
@@ -94,20 +97,21 @@ public class BandActivity extends Activity {
         uploadMusicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!filePathTextView.getText().equals(null)){
+                String m = "";
+                m=filePathTextView.getText().toString();
+
+                if(!filePathTextView.getText().equals("")){
                     bandData.postMusic(filePathTextView.getText().toString());
+                }
+                else{
+                    filePathTextView.setText("Please Add a File");
+                    m="";
                 }
 
             }
         });
 
-        Button editBandButton = (Button) findViewById(R.id.editBandBandButton);
-        editBandBandButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
 
         Button leaveBandButton = (Button) findViewById(R.id.leaveBandBandButton);
         leaveBandButton.setOnClickListener(new View.OnClickListener() {
