@@ -57,11 +57,11 @@ public class ProfileActivity extends Activity {
             }
         });
     }
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
         if (requestCode == 1) {
             if(resultCode == RESULT_OK){
-                int idBand = data.getExtras().getInt("idBand");
+                int idBand = intent.getExtras().getInt("idBand");
                 inviteToBandBandID = idBand;
 
                 JSONObject jsonObject = new JSONObject();
@@ -78,6 +78,19 @@ public class ProfileActivity extends Activity {
                     e.printStackTrace();
                 }
 
+                Data data = intent.getParcelableExtra("data");
+                String email = data.profilData.profilEmail;
+                String passwort = data.profilData.passwort;
+                LoginData loginData = new LoginData(email,passwort);
+                if(loginData.login().equals("true")){
+                    Data dataUpdate = new Data(loginData.line1, loginData.line2, loginData.line3, loginData.line4);
+
+                    //finish();
+                    Intent intent2 = new Intent(ProfileActivity.this,MainMenuActivity.class);
+                    intent2.putExtra("data",dataUpdate);
+                    intent2.putExtra("profilID",5);
+                    startActivity(intent2);
+                }
             }
             if (resultCode == RESULT_CANCELED) {
                 //Write your code if there's no result

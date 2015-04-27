@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 
 public class EventActivity extends Activity {
@@ -15,6 +16,27 @@ public class EventActivity extends Activity {
 
         final int id = getIntent().getExtras().getInt("id");
         EventData eventData = new EventData(id);
+        System.out.println("hallo");
+
+        TextView eventName = (TextView) findViewById(R.id.eventName);
+        TextView eventDate = (TextView) findViewById(R.id.eventDate);
+        TextView eventTime = (TextView) findViewById(R.id.eventTime);
+        TextView eventLocation = (TextView) findViewById(R.id.eventLocation);
+        TextView eventBands = (TextView) findViewById(R.id.eventBands);
+        TextView eventGenre = (TextView) findViewById(R.id.eventGenre);
+
+        eventName.setText(eventData.eventName);
+        eventDate.setText(eventData.eventDate);
+        eventTime.setText(eventData.eventTime);
+        eventLocation.setText(eventData.eventLocation);
+        eventGenre.setText(eventData.eventGenre);
+        String bandnames="";
+        for (int i = 0;i<eventData.bandNames.length;i++){
+            if(eventData.bandNames[i].isEmpty()) {
+                bandnames = bandnames + " " + eventData.bandNames[i];
+            }
+        }
+        eventBands.setText(bandnames);
     }
 
 

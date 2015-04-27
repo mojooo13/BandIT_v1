@@ -9,9 +9,73 @@
     tools:context="com.example.mo.bandit_v1.EventActivity">
 
     <TextView
-        android:text="EventActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30dp"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Eventname"
+        android:id="@+id/eventName"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="40dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Date"
+        android:id="@+id/eventDate"
+        android:layout_below="@+id/eventName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Time"
+        android:id="@+id/eventTime"
+        android:layout_below="@+id/eventDate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Location"
+        android:id="@+id/eventLocation"
+        android:layout_below="@+id/eventTime"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Bands"
+        android:id="@+id/eventBands"
+        android:layout_below="@+id/eventLocation"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Genre"
+        android:id="@+id/eventGenre"
+        android:layout_below="@+id/eventBands"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="180dp"
+        android:src="@drawable/emptyband"
+        android:id="@+id/eventPicture"
+        android:layout_below="@+id/eventGenre"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/eventName"
+        android:layout_alignEnd="@+id/eventName" />
 </RelativeLayout>

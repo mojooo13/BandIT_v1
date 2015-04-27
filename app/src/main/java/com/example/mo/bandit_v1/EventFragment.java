@@ -24,9 +24,9 @@ public class EventFragment extends Fragment {
 
     private MyItemAdapter myAdapter;
 
-    int[] idEvents = {1,2,3,4};
     String[] eventNameArray;
     String[] eventGenreArray;
+    int[] eventIDArray;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.event, container, false);
@@ -39,11 +39,13 @@ public class EventFragment extends Fragment {
 
         eventNameArray = new String[eventData.length];
         eventGenreArray = new String[eventData.length];
+        eventIDArray = new int[eventData.length];
 
         for (int i = 0; i<eventDatas.size();i++){
             //EventData eventData = new EventData(idEvents[i]);
             eventNameArray[i] = eventData[i].eventName+": ";
             eventGenreArray[i] = eventData[i].eventGenre;
+            eventIDArray[i] = eventData[i].idEvent;
         }
         initDatensaetze();
         ListView eventListView = (ListView) view.findViewById(R.id.eventListView);
@@ -53,9 +55,10 @@ public class EventFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Datensatz gewaehlterDatensatz = datensaetze.get(position);
-                int idEvent = idEvents[position];
+                int idEvent = eventIDArray[position];
                 Intent intent = new Intent(getActivity(),EventActivity.class);
-                intent.putExtra("idEvents",idEvents);
+                intent.putExtra("id",idEvent);
+                System.out.println(idEvent);
                 startActivity(intent);
             }
         });
@@ -76,9 +79,11 @@ public class EventFragment extends Fragment {
     private class Datensatz {
         public String name;  // besser setter und getter-Methoden schreiben, stört hier aber...
         public String genre; // die Umwandlung von Datum lasse ich weg - das ist ein anderes (großes) Problem
-        public Datensatz(String name, String genre) {
+        public int eventID;
+        public Datensatz(String name, String genre,int eventID) {
             this.name = name;
             this.genre = genre;
+            this.eventID = eventID;
         }
     }
 
@@ -88,7 +93,7 @@ public class EventFragment extends Fragment {
         datensaetze = new ArrayList<Datensatz>();
         for (int i=0; i<eventNameArray.length; i++) {
             // hier aus Arrays auslesen, bei dir wahrscheinlich anders...
-            Datensatz datensatz = new Datensatz(eventNameArray[i],eventGenreArray[i]);
+            Datensatz datensatz = new Datensatz(eventNameArray[i],eventGenreArray[i],eventIDArray[i]);
             datensaetze.add(datensatz);
         }
 

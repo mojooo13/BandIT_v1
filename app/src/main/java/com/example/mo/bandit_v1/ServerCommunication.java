@@ -32,14 +32,14 @@ public class ServerCommunication {
 
     private static Context context;
 
-    String serverip = "http://10.3.252.62";
+    String serverip = "http://192.168.88.21";
 
     //String serverip = "http://10.0.0.21";
 
 
     public String communication (String json){
         //context = c;
-        //192.168.88.47 => Zentrum der Macht
+        //192.168.88.21 => Zentrum der Macht
         //10.0.0.76
         //10.3.252.28
         //192.168.1.15 mo W-Lan
