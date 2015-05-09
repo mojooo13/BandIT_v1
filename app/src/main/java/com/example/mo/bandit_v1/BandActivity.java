@@ -103,10 +103,6 @@ public class BandActivity extends Activity {
                 if(!filePathTextView.getText().equals("")){
                     bandData.postMusic(filePathTextView.getText().toString());
                 }
-                else{
-                    filePathTextView.setText("Please Add a File");
-                    m="";
-                }
 
             }
         });
