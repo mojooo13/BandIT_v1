@@ -3,6 +3,7 @@ package com.example.mo.bandit_v1;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,6 +15,7 @@ import org.json.JSONObject;
 public class EventData implements Parcelable {
     int idEvent;
     int[] idBands;
+    String[] bandNames;
     String eventName;
     String eventDate;
     String eventTime;
@@ -28,22 +30,49 @@ public class EventData implements Parcelable {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("command","getEventData");
-            jsonObject.put("id",idEvent);
+            jsonObject.put("eventId",idEvent);
 
             ServerCommunication con = new ServerCommunication();
             String jsonString = con.communication(jsonObject.toString());
+            System.out.println(jsonString);
             jsonString = jsonString.substring(jsonString.indexOf("$")+1);
             jsonObject = new JSONObject(jsonString);
 
             eventName = jsonObject.getString("eventName");
             eventDate = jsonObject.getString("eventDate");
-            //eventTime = "19:30"; muss noch hinzugefügt werden
+            eventTime = jsonObject.getString("eventTime");
             eventLocation = jsonObject.getString("eventLocation");
             eventGenre = jsonObject.getString("eventGenre");
             //eventMusik = "High Way To Hell"; löschen ?
-            idBands = new int[] {1,2,3,4};
+            JSONArray jsonArray = jsonObject.getJSONArray("BandIds");
+            idBands = new int[jsonArray.length()];
+            for (int i = 0 ; i<jsonArray.length();i++){
+                try {
+                    JSONObject jsonObject2 = jsonArray.getJSONObject(i);
+                    idBands[i] = jsonObject2.getInt("BandIds");
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            try {
 
+                bandNames = new String[idBands.length];
+                for (int i = 0; i < bandNames.length; i++) {
+                    JSONObject jsonObject2 = new JSONObject();
+                    try {
+                        jsonObject.put("command", "getBandData");
+                        jsonObject.put("id", idBands[i]);
+                        ServerCommunication con2 = new ServerCommunication();
+                        String jsonString2 = con.communication(jsonObject.toString());
+                        System.out.println(jsonString);
 
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

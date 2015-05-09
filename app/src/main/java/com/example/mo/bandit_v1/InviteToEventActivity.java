@@ -83,8 +83,8 @@ public class InviteToEventActivity extends Activity {
                     returnIntent.putExtra("idEvent",idEvent);
                     returnIntent.putExtra("date",date);
                     setResult(RESULT_OK,returnIntent);
-                    //finish();
-                    String email = data.profilData.profilEmail;
+                    finish();
+                    /*String email = data.profilData.profilEmail;
                     String passwort = data.profilData.passwort;
                     LoginData loginData = new LoginData(email,passwort);
                     if(loginData.login().equals("true")){
@@ -95,7 +95,7 @@ public class InviteToEventActivity extends Activity {
                         intent.putExtra("data",dataUpdate);
                         intent.putExtra("profilID",5);
                         startActivity(intent);
-                    }
+                    }*/
 
                 }
             });

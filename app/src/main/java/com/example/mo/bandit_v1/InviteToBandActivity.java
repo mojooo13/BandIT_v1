@@ -72,8 +72,10 @@ public class InviteToBandActivity extends Activity {
 
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("idBand",idBand);
+                    returnIntent.putExtra("data",data);
                     setResult(RESULT_OK,returnIntent);
-                    //finish();
+                    finish();
+/*
                     String email = data.profilData.profilEmail;
                     String passwort = data.profilData.passwort;
                     LoginData loginData = new LoginData(email,passwort);
@@ -85,7 +87,7 @@ public class InviteToBandActivity extends Activity {
                         intent.putExtra("data",dataUpdate);
                         intent.putExtra("profilID",5);
                         startActivity(intent);
-                    }
+                    }*/
 
                 }
             });

@@ -39,7 +39,7 @@ public class ServerCommunication {
 
     public String communication (String json){
         //context = c;
-        //192.168.88.47 => Zentrum der Macht
+        //192.168.88.21 => Zentrum der Macht
         //10.0.0.76
         //10.3.252.28
         //192.168.1.15 mo W-Lan
