@@ -59,9 +59,10 @@ public class BandData implements Parcelable {
             String value = "";
             for(int i = 0;i< memberArray.length();i++){
                 JSONObject jsonObject1 = memberArray.getJSONObject(i);
+                System.out.println("getstring:" + jsonObject1.getString("profileMember"));
                 value = value+jsonObject1.getString("profileMember")+", ";
             }
-            value = value.substring(0,value.lastIndexOf(",")-1);
+            value = value.substring(0,value.lastIndexOf(","));
             bandMembers = value;
             System.out.println(bandGenre);
             System.out.println(bandMembers);

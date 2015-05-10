@@ -68,24 +68,17 @@ public class BandActivity extends Activity {
         genreBandTextView.setText(bandData.getBandGenre());
         membersBandTextView.setText(bandData.getBandMembers());
 
-        Button editBandBandButton = (Button) findViewById(R.id.editBandBandButton);
-        editBandBandButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("hi");
-                Intent editBandActivity = new Intent(BandActivity.this,EditBandActivity.class);
-                startActivity(editBandActivity);
-
-            }
-        });
-
        if(fromFragment){
             LinearLayout uploadLayout = (LinearLayout)findViewById(R.id.BandpageMusicUploadLinearLayout);
             uploadLayout.setVisibility(View.VISIBLE);
-            editBandBandButton.setVisibility(View.VISIBLE);
         }
-        Button chooseMusicButton = (Button) findViewById(R.id.bandChooseMusic);
-        chooseMusicButton.setOnClickListener(new View.OnClickListener() {
+        else{
+           LinearLayout uploadLayout = (LinearLayout)findViewById(R.id.BandpageMusicUploadLinearLayout);
+           uploadLayout.setVisibility(View.GONE);
+
+       }
+        Button addMusicButton = (Button) findViewById(R.id.bandChooseMusic);
+        addMusicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showFileChooser();
@@ -162,7 +155,7 @@ public class BandActivity extends Activity {
                 String musicEntry = chosenEntry.getMusicEntry();
 
                 Intent playMusicActivity = new Intent(BandActivity.this,PlayMusic.class);
-                playMusicActivity.putExtra("adress","http://192.168.88.21/musicupload/" + musicEntry);
+                playMusicActivity.putExtra("adress","http://10.0.0.80/musicupload/" + musicEntry);
                 startActivity(playMusicActivity);
 
 
@@ -210,9 +203,7 @@ public class BandActivity extends Activity {
         intent.setType("Audio/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
 
-
-
-        try {
+       try {
             if(isIntentAvailable(this,"*/*")) {
                 startActivityForResult(
                         Intent.createChooser(intent, "Select a File to Upload"),
